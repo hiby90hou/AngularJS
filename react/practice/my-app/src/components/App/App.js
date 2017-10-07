@@ -1,34 +1,31 @@
-// import React, { Component } from 'react';
+import React, { Component } from 'react';
+import CommentAdd from '../CommentAdd/';
+import CommentList from '../CommentList/';
 // import logo from './logo.svg';
-// import './App.css';
-
-// class App extends Component {
-//   render() {
-//     return (
-//       <div className="App">
-//         <header className="App-header">
-//           <img src={logo} className="App-logo" alt="logo" />
-//           <h1 className="App-title">Welcome to React</h1>
-//         </header>
-//         <p>hello world</p>
-//         <p className="App-intro">
-//           To get started, edit <code>src/App.js</code> and save to reload.
-//         </p>
-//       </div>
-//     );
-//   }
-// }
 
 
-// export default App;
 
-import React from 'react';
-
-class App extends React.Component {
+class App extends Component {
   render() {
     return (
-      <div>
-      </div>
+        <div>
+          <header className="site-header jumbotron">
+            <div className="container">
+              <div className="row">
+                <div className="col-xs-12">
+                  <h1>请发表对React的评论</h1>
+                </div>
+              </div>
+            </div>
+          </header>
+          <div className="container">
+          <CommentAdd/>
+
+          <CommentList/>
+          
+
+          </div>
+        </div>
     )
   };
 }
