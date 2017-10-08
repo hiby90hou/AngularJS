@@ -4,6 +4,7 @@
  */
 import './commentItem.css'
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class CommentItem extends React.Component {
   constructor (props) {
