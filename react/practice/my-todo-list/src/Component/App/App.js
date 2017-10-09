@@ -16,7 +16,7 @@ class App extends Component {
       {isDone:false,title:'eat'},
       {isDone:false,title:'drink'}
       ],
-      {isAllDone:false}
+      isAllDone:false
     }
   }
 
@@ -26,25 +26,50 @@ class App extends Component {
     //add
     todos.unshift(todo)
     //update
-    this.setState({todos})
+    this.setState({
+      todos,
+      isAllDone:false
+    })
   }
 
   deleteTodo = (index) => {
-    const todos = this.state.todos
+    const todos = this.state.todos;
+    const isAllDone = this.state.todos.filter(todo => !todo.isDone);
     todos.splice(index, 1)
-    this.setState({todos})
+    this.setState({
+      todos,
+      isAllDone:isAllDone.length===0&&todos.length>0
+    })
   }
 
   //删除所有选中的todo
   deleteDoneTodos = () => {
     //得到所有未完成的TODO组成的数组
-    const todos = this.state.todos.filter(todo => !todo.isDone)
-    this.setState({todos})
+    const todos = this.state.todos.filter(todo => !todo.isDone) 
+    this.setState({
+      todos,
+      isAllDone:false
+    })
   }
 
   //更新指定todo的isDone值
   updateTodoChecked = () =>{
-    this.setState({todos:this.state.todos})
+    const todos = this.state.todos;
+    const isAllDone = this.state.todos.filter(todo => !todo.isDone); 
+    this.setState({
+      todos:this.state.todos,
+      isAllDone:isAllDone.length===0&&todos.length>0
+    })
+  }
+  //设置所有todos的选中状态
+  changeAllChecked = (isAllDone) =>{
+    //更新todos中所有TODO的状态
+    const todos = this.state.todos;
+    todos.forEach(todo =>{todo.isDone = isAllDone;})
+    this.setState({
+      isAllDone,
+      todos
+    })
   }
 
   
@@ -62,7 +87,10 @@ class App extends Component {
       const footerProps = {
         totalCount: this.state.todos.length,
         doneCount:this.state.todos.filter(todo => todo.isDone).length,
-        deleteDoneTodos:this.deleteDoneTodos
+        deleteDoneTodos:this.deleteDoneTodos,
+        isAllDone:this.state.isAllDone,
+        changeAllChecked: this.changeAllChecked
+
       }
 
     return (
