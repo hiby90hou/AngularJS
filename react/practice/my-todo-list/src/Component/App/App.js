@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 // import logo from '../../logo.svg';
+import PubSub from 'pubsub-js'
 import './App.css';
 import TodoHeader from '../TodoHeader/'
 import TodoMain from '../TodoMain/'
@@ -18,6 +19,14 @@ class App extends Component {
       ],
       isAllDone:false
     }
+  }
+
+  //内置的方法 不需要箭头函数
+  componentDidMount(){
+    //订阅消息（删除TODO）
+    PubSub.subscribe('delete', (index) => {
+      this.deleteTodo(index)
+    })
   }
 
   addTodo = (todo) => {

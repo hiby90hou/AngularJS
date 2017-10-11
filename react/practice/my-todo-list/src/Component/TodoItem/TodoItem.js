@@ -1,4 +1,5 @@
 import React from 'react';
+import PubSub from 'pubsub-js'
 
 class TodoItem extends React.Component {
 	//checkbox状态改变的监听回调函数
@@ -9,12 +10,18 @@ class TodoItem extends React.Component {
 	}
 
 	//点击删除相应
-	deleteTodo = () => {
-		const {deleteTodo,todo,index} = this.props
-		if(window.confirm(`确定删除${todo.title}吗`)){
-			deleteTodo(index)
-		}
-	}
+	// deleteTodo = () => {
+	// 	const {deleteTodo,todo,index} = this.props
+	// 	if(window.confirm(`确定删除${todo.title}吗`)){
+	// 		deleteTodo(index)
+	// 	}
+	// }
+    deleteTodo = () =>{
+    	const {todo,index} = this.props
+    	if(window.confirm(`确定删除${todo.title}吗`)){
+    		PubSub.publish('delete',index)
+    	}
+    }
 
 	handleEnter = () =>{
 		this.refs.li.style.background = "#ccc"
