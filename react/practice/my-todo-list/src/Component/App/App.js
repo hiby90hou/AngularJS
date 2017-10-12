@@ -5,7 +5,7 @@ import './App.css';
 import TodoHeader from '../TodoHeader/'
 import TodoMain from '../TodoMain/'
 import TodoFooter from '../TodoFooter/'
-
+import UserGist from '../UserGist/'
 
 class App extends Component {
 
@@ -17,7 +17,9 @@ class App extends Component {
       {isDone:false,title:'eat'},
       {isDone:false,title:'drink'}
       ],
-      isAllDone:false
+      isAllDone:false,
+      userName: 'XXX',
+      lastGistUrl: '###'
     }
   }
 
@@ -27,6 +29,26 @@ class App extends Component {
     PubSub.subscribe('delete', (index) => {
       this.deleteTodo(index)
     })
+    //Ajax URL
+    var url = 'https://api.github.com/users/octocat/gists';
+    //fetch Ajax
+    fetch(url).then(
+      (response) =>{
+        response.json().then((result) => {
+        
+        var lastGist = result[0];
+        console.log(lastGist.owner.login);
+        this.setState({
+          userName:lastGist.owner.login,
+          lastGistUrl: lastGist.html_url
+        });
+      })
+    },
+    (error) => {
+      console.log(error);
+    }
+    );
+
   }
 
   addTodo = (todo) => {
@@ -81,6 +103,7 @@ class App extends Component {
     })
   }
 
+
   
 
   render() {
@@ -102,12 +125,19 @@ class App extends Component {
 
       }
 
+    //定义Ajax的props
+    const userGistProps = {
+      userName: this.state.userName,
+      lastGistUrl: this.state.lastGistUrl
+    }
+
     return (
       <div className="todo-container">
         <div className="todo-wrap">
           <TodoHeader addTodo={this.addTodo}/>
           <TodoMain {...mainProps}/>
           <TodoFooter {...footerProps}/>
+          <UserGist {...userGistProps}/>
         </div>
       </div>
     );
