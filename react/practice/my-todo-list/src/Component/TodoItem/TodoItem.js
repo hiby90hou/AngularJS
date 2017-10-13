@@ -19,6 +19,7 @@ class TodoItem extends React.Component {
     deleteTodo = () =>{
     	const {todo,index} = this.props
     	if(window.confirm(`确定删除${todo.title}吗`)){
+    		console.log(index);
     		PubSub.publish('delete',index)
     	}
     }

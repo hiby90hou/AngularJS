@@ -26,7 +26,8 @@ class App extends Component {
   //内置的方法 不需要箭头函数
   componentDidMount(){
     //订阅消息（删除TODO）
-    PubSub.subscribe('delete', (index) => {
+    PubSub.subscribe('delete', (msg, index) => {
+      console.log(index);
       this.deleteTodo(index)
     })
     //Ajax URL
@@ -37,7 +38,7 @@ class App extends Component {
         response.json().then((result) => {
         
         var lastGist = result[0];
-        console.log(lastGist.owner.login);
+        // console.log(lastGist.owner.login);
         this.setState({
           userName:lastGist.owner.login,
           lastGistUrl: lastGist.html_url
