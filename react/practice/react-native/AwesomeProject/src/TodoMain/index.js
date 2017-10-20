@@ -1,20 +1,23 @@
 import React from 'react';
-import TodoItem from '../TodoItem/TodoItem'
-import './TodoMain.css'
+import {Text, View} from 'react-native';
+ import TodoItem from '../TodoItem/TodoItem'
+// import './TodoMain.css'
 
 class TodoMain extends React.Component {
 	render() {
 		const todos = this.props.todos;
 		return (
-			<ul className="todo-main">
+			<View className="todo-main">
 				{
 					todos.map((todo,index)=>{
 						return (
 								<TodoItem key={index} todo={todo} index={index} {...this.props}/>
+								// <Text>todo-main</Text>
+
 							)
 					})
 				}
-			</ul>
+			</View>
 		)
 	};
 }
