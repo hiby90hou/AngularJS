@@ -28,7 +28,7 @@ class TodoFooter extends Component {
         <View>
           <Text>Complete {doneCount} / Total {totalCount}</Text>
         </View>
-        <Button title="清除已完成任务" className="btn btn-danger" onPress={this.deleteDoneTodos}/>
+        <Button title="delete completed tasks" className="btn btn-danger" onPress={this.deleteDoneTodos}/>
       </View>
     )
   }
