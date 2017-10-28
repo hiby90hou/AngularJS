@@ -200,3 +200,5 @@ end
 # Math::PI
 # Math.sqrt(2)
 # Math::sqrt(2)
+
+#模块是不能实例化的
