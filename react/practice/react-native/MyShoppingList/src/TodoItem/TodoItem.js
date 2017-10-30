@@ -23,8 +23,9 @@ class TodoItem extends React.Component {
 			    
 			  }else{
 			  	var date = new Date(year,month,day)
-			  	var getMonth = parseInt(date.getMonth())+1;
-			  	todo.expire = "Expire date: "+date.getFullYear()+"/"+(parseInt(date.getMonth())+1)+"/"+date.getDate()
+			  	// var getMonth = parseInt(date.getMonth())+1;
+			  	// todo.expire = "Expire date: "+date.getFullYear()+"/"+(parseInt(date.getMonth())+1)+"/"+date.getDate()
+			  	todo.expire = date
 			}
 			  
 			  console.log(todo.expire);
@@ -71,8 +72,10 @@ class TodoItem extends React.Component {
 						<CheckBox type="checkbox" value={isDone} onChange ={this.handleChange}/>
 						<Text>{title}</Text>
 					</View>
-					<Text style={2<1?styles.expire_date:styles.expire_date_red}>{expire}</Text>
-					<Button  style={styles.content} title="delete" onPress={this.deleteTodo} ref='button'/>
+					<Text style={(expire !=null && expire-new Date()>3)?styles.expire_date:styles.expire_date_red}>
+						{(expire !=null)?("Expire date: "+expire.getFullYear()+"/"+(parseInt(expire.getMonth())+1)+"/"+expire.getDate()):""}
+					</Text>
+					<Button style={styles.content} title="delete" onPress={this.deleteTodo} ref='button'/>
 				</View>
 		)
 	};
