@@ -4,24 +4,6 @@ import TodoHeader from '../TodoHeader/'
 import TodoMain from '../TodoMain/'
 import TodoFooter from '../TodoFooter/'
 
-// import logo from '../../logo.svg';
-// import {
-//   BrowserRouter as Router,
-//   Route,
-//   NavLink
-// } from 'react-router-dom'
-
-// import PubSub from 'pubsub-js'
-// import './App.css';
-// import TodoHeader from '../TodoHeader/'
-// import TodoMain from '../TodoMain/'
-// import TodoFooter from '../TodoFooter/'
-// import UserGist from '../UserGist/'
-// import Home from '../Home/Home.js'
-// import About from '../About/About.js'
-// import Repos from '../Repos/'
-// import Repo from '../Repo/Repo.js'
-
 class App extends Component {
 
   constructor(props){
@@ -29,43 +11,14 @@ class App extends Component {
     //初始化state
     this.state = {
       todos:[
-      {isDone:false,title:'eat'},
-      {isDone:false,title:'drink'}
+      {isDone:false,title:'cake',expire:null},
+      {isDone:false,title:'coke',expire:null}
       ],
       isAllDone:false,
       userName: 'XXX',
       lastGistUrl: '###'
     }
   }
-
-  //内置的方法 不需要箭头函数
-  // componentDidMount(){
-  //   //订阅消息（删除TODO）
-  //   PubSub.subscribe('delete', (msg, index) => {
-  //     console.log(index);
-  //     this.deleteTodo(index)
-  //   })
-  //   //Ajax URL
-  //   var url = 'https://api.github.com/users/octocat/gists';
-  //   //fetch Ajax
-  //   fetch(url).then(
-  //     (response) =>{
-  //       response.json().then((result) => {
-        
-  //       var lastGist = result[0];
-  //       // console.log(lastGist.owner.login);
-  //       this.setState({
-  //         userName:lastGist.owner.login,
-  //         lastGistUrl: lastGist.html_url
-  //       });
-  //     })
-  //   },
-  //   (error) => {
-  //     console.log(error);
-  //   }
-  //   );
-
-  // }
 
   addTodo = (todo) => {
     const todos = this.state.todos
@@ -141,11 +94,6 @@ class App extends Component {
 
       }
 
-    // //定义Ajax的props
-    // const userGistProps = {
-    //   userName: this.state.userName,
-    //   lastGistUrl: this.state.lastGistUrl
-    // }
     return (
       <ScrollView style={{flex: 1}}>
       <View style={{flex: 1,alignItems: 'center'}}>
@@ -157,28 +105,6 @@ class App extends Component {
       <TodoMain {...mainProps}/>
       <TodoFooter {...footerProps}/>
       </ScrollView>
-      // <Router>
-      //   <div className="todo-container">
-      //     <div>
-      //       <h2>Hello React-Router</h2>
-      //       <ul>
-      //         <li><NavLink to="/about">About</NavLink></li>
-      //         <li><NavLink to="/repos">repos</NavLink></li>
-      //       </ul>
-      //       <Route exact path="/" component={Home}/>
-      //       <Route path="/about" component={About}/>
-      //       <Route path="/repos" component={Repos}/>
-      //       <Route path="/repo/:username/:posName" component={Repo}/>
-      //     </div>
-
-      //     <div className="todo-wrap">
-      //       <TodoHeader addTodo={this.addTodo}/>
-      //       <TodoMain {...mainProps}/>
-      //       <TodoFooter {...footerProps}/>
-      //       <UserGist {...userGistProps}/>
-      //     </div>
-      //   </div>
-      // </Router>
     );
   }
 }

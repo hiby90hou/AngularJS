@@ -7,33 +7,22 @@ class TodoItem extends React.Component {
 	handleChange = ()=>{
 		const {updateTodoChecked,todo}= this.props
 		todo.isDone = !todo.isDone
+		if(todo.isDone){
+			console.log('输入时间');
+			todo.expire = "2017/11/1"
+		}
 		updateTodoChecked()
 	}
 
 	//点击删除相应
 	deleteTodo = () => {
 		const {deleteTodo,todo,index} = this.props
-		// if(window.confirm(`确定删除${todo.title}吗`)){
 			deleteTodo(index)
-		// }
 	}
 
 
-	// handleEnter = () =>{
-	// 	this.refs.li.style.background = "#ccc"
-	// 	this.refs.button.style.display = 'block'
-	// }
-
-	// handleLeave = () =>{
-	// 	this.refs.li.style.background = "#fff"
-	// 	this.refs.button.style.display = 'none'
-	// }
-
-
-
-
 	render() {
-		const {title,isDone} = this.props.todo
+		const {title,isDone,expire} = this.props.todo
 		
 		const styles = StyleSheet.create({
 		  container: {
@@ -45,6 +34,10 @@ class TodoItem extends React.Component {
 		  content: {
 		    flex: 1,
 		    flexDirection: 'row'
+		  },
+		  expire_date:{
+		  	flex: 1,
+		  	color:"#ccc"
 		  }
 		})
 		return (
@@ -53,6 +46,7 @@ class TodoItem extends React.Component {
 						<CheckBox type="checkbox" value={isDone} onChange ={this.handleChange}/>
 						<Text>{title}</Text>
 					</View>
+					<Text style={styles.expire_date}>Expire date:{expire}</Text>
 					<Button  style={styles.content} title="delete" onPress={this.deleteTodo} ref='button'/>
 				</View>
 		)
