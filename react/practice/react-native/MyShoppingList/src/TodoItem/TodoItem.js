@@ -19,7 +19,7 @@ class TodoItem extends React.Component {
 			  });
 			  if (action == DatePickerAndroid.dismissedAction) {
 			    // Selected year, month (0-11), day
-			    todo.expire = ""
+			    todo.expire = null
 			    
 			  }else{
 			  	var date = new Date(year,month,day)
