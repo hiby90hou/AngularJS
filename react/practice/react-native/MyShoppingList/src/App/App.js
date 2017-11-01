@@ -3,6 +3,7 @@ import { View, Text, AppRegistry, Image, ScrollView} from 'react-native';
 import TodoHeader from '../TodoHeader/'
 import TodoMain from '../TodoMain/'
 import TodoFooter from '../TodoFooter/'
+import ReadFile from '../readFile/'
 
 class App extends Component {
 
@@ -115,6 +116,7 @@ class App extends Component {
       
       <TodoMain {...mainProps}/>
       <TodoFooter {...footerProps}/>
+      <ReadFile/>
       </ScrollView>
     );
   }
