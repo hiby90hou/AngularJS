@@ -8,7 +8,7 @@ class TodoItem extends React.Component {
 		const {updateTodoChecked,todo}= this.props
 		todo.isDone = !todo.isDone
 		if(todo.isDone){
-			console.log('输入时间');
+			// console.log('输入时间');
 			// todo.expire = "2017/11/1"
 			try {
 			  const {action, year, month, day} = await DatePickerAndroid.open({
@@ -28,7 +28,7 @@ class TodoItem extends React.Component {
 			  	todo.expire = date
 			}
 			  
-			  console.log(todo.expire);
+			  // console.log(todo.expire);
 			} catch ({code, message}) {
 			  console.warn('Cannot open date picker', message);
 			}
@@ -42,10 +42,43 @@ class TodoItem extends React.Component {
 			deleteTodo(index)
 	}
 
+	colorChange = (color) => {
+		const {todo} = this.props
+		let num = Math.floor ( (todo.expire-new Date()) / ( 24 * 3600 * 1000 ))+1
+		console.log(num);
+		if(todo.expire!=null && num<3 && num>=0){
+			return color = {
+			veryfresh:false,
+      		nearexpire:true,
+      		isexpired:false
+      	}
+		}
+		else if(todo.expire!=null && num<0){
+			return color = {
+				veryfresh:false,
+				nearexpire:false,
+				isexpired:true
+			}
+		}
+		else{
+			return color
+		}
+	}
+
 
 	render() {
 		const {title,isDone,expire} = this.props.todo
 		
+		let color = {
+			veryfresh:true,
+      		nearexpire:false,
+      		isexpired:false
+      	}
+      	color = this.colorChange(color)
+      	console.log(color);
+		
+		// console.log(this.state);
+
 		const styles = StyleSheet.create({
 		  container: {
 		    flex: 1, 
@@ -58,12 +91,17 @@ class TodoItem extends React.Component {
 		    flexDirection: 'row'
 		  },
 		  expire_date:{
-		  	flex: 1,
+		  	flex: 1
+		  },
+		  gray_color:{
 		  	color:"#ccc"
 		  },
-		  expire_date_red:{
-		  	flex: 1,
+		  red_color:{
 		  	color:"red"
+		  },
+		  dark_gray_color:{
+		  	color:"#50555b",
+		  	textDecorationLine:"line-through"
 		  }
 		})
 		return (
@@ -72,7 +110,7 @@ class TodoItem extends React.Component {
 						<CheckBox type="checkbox" value={isDone} onChange ={this.handleChange}/>
 						<Text>{title}</Text>
 					</View>
-					<Text style={(expire !=null && expire-new Date()>3)?styles.expire_date:styles.expire_date_red}>
+					<Text style={[styles.expire_date, color.veryfresh && styles.gray_color, color.nearexpire && styles.red_color, color.isexpired && styles.dark_gray_color]}>
 						{(expire !=null)?("Expire date: "+expire.getFullYear()+"/"+(parseInt(expire.getMonth())+1)+"/"+expire.getDate()):""}
 					</Text>
 					<Button style={styles.content} title="delete" onPress={this.deleteTodo} ref='button'/>

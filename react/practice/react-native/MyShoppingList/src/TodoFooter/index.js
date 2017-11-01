@@ -5,8 +5,8 @@ class TodoFooter extends Component {
 
 
   //删除完成的todos
-  deleteDoneTodos = () => {
-    this.props.deleteDoneTodos()
+  deleteExpireItem = () => {
+    this.props.deleteExpireItem()
   }
 
   //处理改变
@@ -28,7 +28,7 @@ class TodoFooter extends Component {
         <View>
           <Text>Complete {doneCount} / Total {totalCount}</Text>
         </View>
-        <Button title="delete completed tasks" className="btn btn-danger" onPress={this.deleteDoneTodos}/>
+        <Button title="delete expired item" className="btn btn-danger" onPress={this.deleteExpireItem}/>
       </View>
     )
   }

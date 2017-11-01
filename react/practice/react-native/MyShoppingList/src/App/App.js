@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, AppRegistry, Image, ScrollView } from 'react-native';
+import { View, Text, AppRegistry, Image, ScrollView} from 'react-native';
 import TodoHeader from '../TodoHeader/'
 import TodoMain from '../TodoMain/'
 import TodoFooter from '../TodoFooter/'
@@ -43,9 +43,20 @@ class App extends Component {
   }
 
   //删除所有选中的todo
-  deleteDoneTodos = () => {
+  deleteExpireItem = () => {
+    // let currentTime = new Date()
+    // console.log(currentTime);
+    function checkExpire(todo){
+      let dateNum = Math.floor ( (todo.expire-new Date()) / ( 24 * 3600 * 1000 ))+1
+      if(todo.expire==null || dateNum>=0){
+        // console.log('no expire');
+        return todo;
+      }
+      
+    }
     //得到所有未完成的TODO组成的数组
-    const todos = this.state.todos.filter(todo => !todo.isDone) 
+    const todos = this.state.todos.filter(todo => (checkExpire(todo))) 
+    console.log(todos);
     this.setState({
       todos,
       isAllDone:false
@@ -88,7 +99,7 @@ class App extends Component {
       const footerProps = {
         totalCount: this.state.todos.length,
         doneCount:this.state.todos.filter(todo => todo.isDone).length,
-        deleteDoneTodos:this.deleteDoneTodos,
+        deleteExpireItem:this.deleteExpireItem,
         isAllDone:this.state.isAllDone,
         changeAllChecked: this.changeAllChecked
 
