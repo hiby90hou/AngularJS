@@ -44,7 +44,11 @@ class TodoItem extends React.Component {
 
 	colorChange = (color) => {
 		const {todo} = this.props
-		let num = Math.floor ( (todo.expire-new Date()) / ( 24 * 3600 * 1000 ))+1
+		let expireDate=null
+		if(todo.expire!=null){
+			expireDate = new Date(todo.expire)
+		}
+		let num = Math.floor ( (expireDate-new Date()) / ( 24 * 3600 * 1000 ))+1
 		// console.log(num);
 		if(todo.expire!=null && num<3 && num>=0){
 			return color = {
@@ -68,7 +72,7 @@ class TodoItem extends React.Component {
 
 	render() {
 		const {title,isDone,expire} = this.props.todo
-		
+		let expireDate = new Date(expire)
 		let color = {
 			veryfresh:true,
       		nearexpire:false,
@@ -111,7 +115,7 @@ class TodoItem extends React.Component {
 						<Text>{title}</Text>
 					</View>
 					<Text style={[styles.expire_date, color.veryfresh && styles.gray_color, color.nearexpire && styles.red_color, color.isexpired && styles.dark_gray_color]}>
-						{(expire !=null)?("Expire date: "+expire.getFullYear()+"/"+(parseInt(expire.getMonth())+1)+"/"+expire.getDate()):""}
+						{(expire !=null)?("Expire date: "+expireDate.getFullYear()+"/"+(parseInt(expireDate.getMonth())+1)+"/"+expireDate.getDate()):""}
 					</Text>
 					<Button style={styles.content} title="delete" onPress={this.deleteTodo} ref='button'/>
 				</View>

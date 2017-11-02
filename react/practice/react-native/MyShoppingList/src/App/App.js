@@ -12,8 +12,8 @@ class App extends Component {
     //初始化state
     this.state = {
       todos:[
-      // {isDone:false,title:'cake',expire:null},
-      // {isDone:false,title:'coke',expire:null}
+      {isDone:false,title:'cake',expire:null},
+      {isDone:false,title:'coke',expire:null}
       ],
       isAllDone:false,
       userName: 'XXX',
@@ -64,7 +64,10 @@ class App extends Component {
     // let currentTime = new Date()
     // console.log(currentTime);
     function checkExpire(todo){
-      let dateNum = Math.floor ( (todo.expire-new Date()) / ( 24 * 3600 * 1000 ))+1
+      let dateNum
+      if(todo.expire!=null){
+      dateNum = Math.floor ( (new Date(todo.expire)-new Date()) / ( 24 * 3600 * 1000 ))+1
+      }
       if(todo.expire==null || dateNum>=0){
         // console.log('no expire');
         return todo;
