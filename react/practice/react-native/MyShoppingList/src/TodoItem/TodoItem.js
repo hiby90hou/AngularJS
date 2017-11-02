@@ -45,7 +45,7 @@ class TodoItem extends React.Component {
 	colorChange = (color) => {
 		const {todo} = this.props
 		let num = Math.floor ( (todo.expire-new Date()) / ( 24 * 3600 * 1000 ))+1
-		console.log(num);
+		// console.log(num);
 		if(todo.expire!=null && num<3 && num>=0){
 			return color = {
 			veryfresh:false,
@@ -75,7 +75,7 @@ class TodoItem extends React.Component {
       		isexpired:false
       	}
       	color = this.colorChange(color)
-      	console.log(color);
+      	// console.log(color);
 		
 		// console.log(this.state);
 

@@ -12,14 +12,16 @@ class App extends Component {
     //初始化state
     this.state = {
       todos:[
-      {isDone:false,title:'cake',expire:null},
-      {isDone:false,title:'coke',expire:null}
+      // {isDone:false,title:'cake',expire:null},
+      // {isDone:false,title:'coke',expire:null}
       ],
       isAllDone:false,
       userName: 'XXX',
       lastGistUrl: '###'
     }
   }
+
+
 
   addTodo = (todo) => {
     const todos = this.state.todos
@@ -32,6 +34,20 @@ class App extends Component {
       isAllDone:false
     })
   }
+
+  initState = (newState) =>{
+    const todos = newState.todos
+    const isAllDone = newState.isAllDone
+    const userName = newState.userName
+    const lastGistUrl = newState.lastGistUrl
+
+    this.setState({
+      todos,
+      isAllDone,
+      userName,
+      lastGistUrl
+    })
+  }  
 
   deleteTodo = (index) => {
     const todos = this.state.todos;
@@ -105,6 +121,11 @@ class App extends Component {
         changeAllChecked: this.changeAllChecked
 
       }
+    //定义readfile标签的props
+      const readfileProps = {
+        state: this.state,
+        initState:this.initState
+      }
 
     return (
       <ScrollView style={{flex: 1}}>
@@ -116,7 +137,7 @@ class App extends Component {
       
       <TodoMain {...mainProps}/>
       <TodoFooter {...footerProps}/>
-      <ReadFile/>
+      <ReadFile {...readfileProps}/>
       </ScrollView>
     );
   }
