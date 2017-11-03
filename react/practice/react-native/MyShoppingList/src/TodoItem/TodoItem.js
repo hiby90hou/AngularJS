@@ -115,7 +115,7 @@ class TodoItem extends React.Component {
 						<Text>{title}</Text>
 					</View>
 					<Text style={[styles.expire_date, color.veryfresh && styles.gray_color, color.nearexpire && styles.red_color, color.isexpired && styles.dark_gray_color]}>
-						{(expire !=null)?("Expire date: "+expireDate.getFullYear()+"/"+(parseInt(expireDate.getMonth())+1)+"/"+expireDate.getDate()):""}
+						{(expire !=null)?("Expire date:\n"+expireDate.getFullYear()+"/"+(parseInt(expireDate.getMonth())+1)+"/"+expireDate.getDate()):""}
 					</Text>
 					<Button style={styles.content} title="delete" onPress={this.deleteTodo} ref='button'/>
 				</View>
