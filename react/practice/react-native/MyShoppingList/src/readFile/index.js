@@ -8,14 +8,15 @@ componentWillMount() {
   //read file
   // require the module
 var RNFS = require('react-native-fs');
+console.log(RNFS.ExternalDirectoryPath+'/MyShoppingList/');
 
 // get a list of files and directories in the main bundle
-RNFS.readDir(RNFS.DocumentDirectoryPath) // On Android, use "RNFS.DocumentDirectoryPath" (MainBundlePath is not defined)
+RNFS.readDir(RNFS.ExternalDirectoryPath+'/MyShoppingList/') // On Android, use "RNFS.DocumentDirectoryPath" (MainBundlePath is not defined)
   .then((result) => {
     console.log('GOT RESULT', result);
 
-    // stat the 2nd file
-    return Promise.all([RNFS.stat(result[1].path), result[1].path]);
+    // stat the 1st file
+    return Promise.all([RNFS.stat(result[0].path), result[0].path]);
   })
   .then((statResult) => {
     if (statResult[0].isFile()) {
@@ -74,12 +75,16 @@ var saveStr = JSON.stringify(state)
 console.log(saveStr);
 
 // create a path you want to write to
-var path = RNFS.DocumentDirectoryPath + '/shoppingListData.json';
+var path = RNFS.ExternalDirectoryPath + '/MyShoppingList/shoppingListData.json';
+
+//make dir for this file
+RNFS.mkdir(RNFS.ExternalDirectoryPath +'/MyShoppingList/')
 
 // write the file
 RNFS.writeFile(path, saveStr, 'utf8')
   .then((success) => {
-    console.log('FILE WRITTEN!');
+    console.log('FILE WRITTEN! Path:');
+    console.log(path);
     // console.log(path);
   })
   .catch((err) => {
