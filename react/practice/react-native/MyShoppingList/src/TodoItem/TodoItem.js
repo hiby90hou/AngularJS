@@ -36,6 +36,28 @@ class TodoItem extends React.Component {
 		updateTodoChecked()
 	})
 
+	changeDate = (async()=>{
+		const {updateTodoChecked,todo}= this.props
+		if(todo.isDone){
+			let temp = todo.expire
+			try {
+			  const {action, year, month, day} = await DatePickerAndroid.open({
+			    date: new Date(),
+			    mode:'spinner'		    
+			  });
+			  if (action == DatePickerAndroid.dismissedAction) {
+			    todo.expire = temp
+			  }else{
+			  	var date = new Date(year,month,day)
+			  	todo.expire = date
+			}
+			} catch ({code, message}) {
+			  console.warn('Cannot open date picker', message);
+			}
+		}
+		updateTodoChecked()
+	})
+
 	//点击删除相应
 	deleteTodo = () => {
 		const {deleteTodo,todo,index} = this.props
@@ -114,7 +136,7 @@ class TodoItem extends React.Component {
 						<CheckBox type="checkbox" value={isDone} onChange ={this.handleChange}/>
 						<Text>{title}</Text>
 					</View>
-					<Text style={[styles.expire_date, color.veryfresh && styles.gray_color, color.nearexpire && styles.red_color, color.isexpired && styles.dark_gray_color]}>
+					<Text style={[styles.expire_date, color.veryfresh && styles.gray_color, color.nearexpire && styles.red_color, color.isexpired && styles.dark_gray_color]} onPress={this.changeDate}>
 						{(expire !=null)?("Expire date:\n"+expireDate.getFullYear()+"/"+(parseInt(expireDate.getMonth())+1)+"/"+expireDate.getDate()):""}
 					</Text>
 					<Button style={styles.content} title="delete" onPress={this.deleteTodo} ref='button'/>
