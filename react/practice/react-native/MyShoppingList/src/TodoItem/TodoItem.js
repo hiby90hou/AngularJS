@@ -1,6 +1,6 @@
 import React from 'react';
 // import PubSub from 'pubsub-js'
-import {Text, View, CheckBox, Button, StyleSheet,DatePickerAndroid} from 'react-native';
+import {Text, View, CheckBox, Button, StyleSheet,DatePickerAndroid, Alert} from 'react-native';
 
 class TodoItem extends React.Component {
 	//checkbox状态改变的监听回调函数
@@ -61,7 +61,16 @@ class TodoItem extends React.Component {
 	//点击删除相应
 	deleteTodo = () => {
 		const {deleteTodo,todo,index} = this.props
-			deleteTodo(index)
+		Alert.alert(
+		  'Are you sure to delete '+ todo.title+'?',
+		  'This operation cannot be undone',
+		  [		    
+		    {text: 'Yes', onPress: () =>deleteTodo(index)},
+		    {text: 'No', onPress: () =>{} },
+		  ],
+		  { cancelable: true }
+		)
+			
 	}
 
 	colorChange = (color) => {

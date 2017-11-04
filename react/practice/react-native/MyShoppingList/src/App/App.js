@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { View, Text, AppRegistry, Image, ScrollView} from 'react-native';
+import { View, Text, AppRegistry, Image, ScrollView,StyleSheet} from 'react-native';
 import TodoHeader from '../TodoHeader/'
 import TodoMain from '../TodoMain/'
 import TodoFooter from '../TodoFooter/'
 import ReadFile from '../readFile/'
+
+var ToolbarAndroid = require('ToolbarAndroid');
 
 class App extends Component {
 
@@ -103,10 +105,24 @@ class App extends Component {
     })
   }
 
+  onActionSelected=(position) => {
+    if (position === 0) { // index of 'Settings'
+      // showSettings();
+    }
+  }
+
 
   
 
   render() {
+
+    // 定义style
+    const styles = StyleSheet.create({
+      toolbar: {
+        backgroundColor: '#e9eaed',
+        height: 56
+      }
+    })
 
     // //定义main标签的props
     const mainProps = {
@@ -132,14 +148,23 @@ class App extends Component {
 
     return (
       <ScrollView style={{flex: 1}}>
+
+      <ToolbarAndroid
+      logo={require('../../resources/logo.png')}
+      title="My Shopping List"
+      style={styles.toolbar}
+      actions={[{title: 'Filter'}]}
+      onActionSelected={this.onActionSelected}></ToolbarAndroid>
+
       <View style={{flex: 1,alignItems: 'center'}}>
-        <Text>My shopping list</Text>
-        <Image source={require('../../resources/logo.png')} style={{width: 193, height: 110}} style={{flex: 1, alignItems: 'center'}}/>
+        <Text>Please enter your item name and press ✓</Text>
+
         <TodoHeader addTodo={this.addTodo}/>
       </View>
       
       <TodoMain {...mainProps}/>
       <TodoFooter {...footerProps}/>
+      <Image source={require('../../resources/logo.png')} style={{width: 193, height: 110}} style={{flex: 1, alignItems: 'center'}}/>
       <ReadFile {...readfileProps}/>
       </ScrollView>
     );
