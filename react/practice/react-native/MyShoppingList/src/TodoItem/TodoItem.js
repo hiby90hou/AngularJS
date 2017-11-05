@@ -7,7 +7,23 @@ class TodoItem extends React.Component {
 	handleChange = (async()=>{
 		const {updateTodoChecked,todo}= this.props
 		todo.isDone = !todo.isDone
-		this.changeDate()
+
+		let self = this
+		
+		if(todo.isDone){
+		Alert.alert(
+		  'please enter item expire date',
+		  '',
+		  [		    
+		    {text: 'Yes', onPress: () =>{self.changeDate()}},
+		  ],
+  			{ cancelable: false }
+		)
+		// this.changeDate()
+	    }
+	    else{
+	    	self.changeDate()
+	    }
 	})
 
 	changeDate = (async()=>{
