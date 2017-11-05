@@ -7,34 +7,6 @@ class TodoItem extends React.Component {
 	handleChange = (async()=>{
 		const {updateTodoChecked,todo}= this.props
 		todo.isDone = !todo.isDone
-		let temp = todo.expire
-		// if(todo.isDone){
-		// 	// console.log('输入时间');
-		// 	// todo.expire = "2017/11/1"
-		// 	try {
-		// 	  const {action, year, month, day} = await DatePickerAndroid.open({
-		// 	    // Use `new Date()` for current date.
-		// 	    // May 25 2020. Month 0 is January.
-		// 	    date: new Date(),
-		// 	    mode:'spinner'		    
-		// 	  });
-		// 	  if (action == DatePickerAndroid.dismissedAction) {
-		// 	    // Selected year, month (0-11), day
-		// 	    todo.expire = temp
-			    
-		// 	  }else{
-		// 	  	var date = new Date(year,month,day)
-		// 	  	// var getMonth = parseInt(date.getMonth())+1;
-		// 	  	// todo.expire = "Expire date: "+date.getFullYear()+"/"+(parseInt(date.getMonth())+1)+"/"+date.getDate()
-		// 	  	todo.expire = date
-		// 	}
-			  
-		// 	  // console.log(todo.expire);
-		// 	} catch ({code, message}) {
-		// 	  console.warn('Cannot open date picker', message);
-		// 	}
-		// }
-		// updateTodoChecked()
 		this.changeDate()
 	})
 
@@ -45,7 +17,7 @@ class TodoItem extends React.Component {
 			try {
 			  const {action, year, month, day} = await DatePickerAndroid.open({
 			    date: new Date(),
-			    mode:'spinner'		    
+			    mode:'spinner'    
 			  });
 			  if (action == DatePickerAndroid.dismissedAction) {
 			    todo.expire = temp
