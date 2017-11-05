@@ -3,8 +3,7 @@
  */
 import React, {Component} from 'react'
 
-import { View, Text, TextInput, AppRegistry, Image } from 'react-native';
-// import './header.css'
+import { View, Text, TextInput, AppRegistry, Image, StyleSheet } from 'react-native';
 
 class TodoHeader extends Component {
   constructor(props){
@@ -47,10 +46,19 @@ class TodoHeader extends Component {
   }
   
   render() {
+
+    // 定义style
+    const styles = StyleSheet.create({
+      todoHeader: {
+        width:300,
+        backgroundColor:"#e4d4f9",
+        borderRadius:20
+      }
+
+    })
     return (
-      <View className="todo-header" style={{width:300, backgroundColor:"#ccc"}}>
-        <Text/>
-        <TextInput type="text" placeholder="Goods name + Enter" onChangeText={this.handleChange.bind(this)} onEndEditing={this.handleEnter.bind(this)} ref={input => { this.textInput = input }}/>
+      <View className="todo-header" style={styles.todoHeader}>
+        <TextInput style={styles.inputBox} underlineColorAndroid = "#b131d8" type="text" placeholder=" Item name + Enter" onChangeText={this.handleChange.bind(this)} onEndEditing={this.handleEnter.bind(this)} ref={input => { this.textInput = input }}/>
         <Text>
           {this.state.text.split(' ').map((word) => word && '🍕').join(' ')}
         </Text>

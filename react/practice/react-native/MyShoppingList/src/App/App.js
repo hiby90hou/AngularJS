@@ -14,8 +14,7 @@ class App extends Component {
     //初始化state
     this.state = {
       todos:[
-      {isDone:false,title:'cake',expire:null},
-      {isDone:false,title:'coke',expire:null}
+      {isDone:false,title:'cake',expire:null}
       ],
       isAllDone:false,
       userName: 'XXX',
@@ -107,12 +106,12 @@ class App extends Component {
 
   onActionSelected=(position) => {
     if (position === 0) { // index of 'Settings'
-      // showSettings();
+      alert("profile")
+    }
+    if (position === 1) {
+      alert("setting")
     }
   }
-
-
-  
 
   render() {
 
@@ -121,6 +120,12 @@ class App extends Component {
       toolbar: {
         backgroundColor: '#e9eaed',
         height: 56
+      },
+      header: {
+        flex: 1,
+        alignItems: 'center',
+        paddingTop:10,
+        paddingBottom:10
       }
     })
 
@@ -153,10 +158,10 @@ class App extends Component {
       logo={require('../../resources/logo.png')}
       title="My Shopping List"
       style={styles.toolbar}
-      actions={[{title: 'Filter'}]}
+      actions={[{title: 'Edit your profile'},{title: 'Setting'}]}
       onActionSelected={this.onActionSelected}></ToolbarAndroid>
 
-      <View style={{flex: 1,alignItems: 'center'}}>
+      <View style={styles.header}>
         <Text>Please enter your item name and press ✓</Text>
 
         <TodoHeader addTodo={this.addTodo}/>
@@ -164,7 +169,8 @@ class App extends Component {
       
       <TodoMain {...mainProps}/>
       <TodoFooter {...footerProps}/>
-      <Image source={require('../../resources/logo.png')} style={{width: 193, height: 110}} style={{flex: 1, alignItems: 'center'}}/>
+
+      {/*<Image source={require('../../resources/logo.png')} style={{width: 193, height: 110}} style={{flex: 1, alignItems: 'center'}}/>*/}
       <ReadFile {...readfileProps}/>
       </ScrollView>
     );

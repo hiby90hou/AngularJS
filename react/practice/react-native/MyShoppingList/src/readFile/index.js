@@ -59,7 +59,7 @@ RNFS.readDir(RNFS.ExternalDirectoryPath+'/MyShoppingList/') // On Android, use "
 
      return (
       <View className="todo-footer">
-        <Text>read File</Text>
+        <Text></Text>
        </View>
     )
   }

@@ -1,12 +1,20 @@
 import React, {Component} from 'react'
-import { View, Text,Button, TextInput } from 'react-native';
+import { View, Text,Button, TextInput, Alert } from 'react-native';
 
 class TodoFooter extends Component {
 
 
   //删除完成的todos
   deleteExpireItem = () => {
-    this.props.deleteExpireItem()
+      Alert.alert(
+      'Are you sure to delete all expired item?',
+      'This operation cannot be undone',
+      [       
+        {text: 'Yes', onPress: () =>this.props.deleteExpireItem()},
+        {text: 'No', onPress: () =>{} },
+      ],
+      { cancelable: true }
+    )
   }
 
   //处理改变
@@ -25,10 +33,10 @@ class TodoFooter extends Component {
         <View>
           <TextInput type="checkbox" checked={isAllDone} onChange={this.handleChange}/>
         </View>
-        <View>
+        <View style={{marginLeft:10,marginRight:10}}>
           <Text>Complete {doneCount} / Total {totalCount}</Text>
+          <Button color='#b131d8' title="delete expired item" className="btn btn-danger" onPress={this.deleteExpireItem}/>
         </View>
-        <Button title="delete expired item" className="btn btn-danger" onPress={this.deleteExpireItem}/>
       </View>
     )
   }

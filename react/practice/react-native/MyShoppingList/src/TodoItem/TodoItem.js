@@ -7,33 +7,35 @@ class TodoItem extends React.Component {
 	handleChange = (async()=>{
 		const {updateTodoChecked,todo}= this.props
 		todo.isDone = !todo.isDone
-		if(todo.isDone){
-			// console.log('输入时间');
-			// todo.expire = "2017/11/1"
-			try {
-			  const {action, year, month, day} = await DatePickerAndroid.open({
-			    // Use `new Date()` for current date.
-			    // May 25 2020. Month 0 is January.
-			    date: new Date(),
-			    mode:'spinner'		    
-			  });
-			  if (action == DatePickerAndroid.dismissedAction) {
-			    // Selected year, month (0-11), day
-			    todo.expire = null
+		let temp = todo.expire
+		// if(todo.isDone){
+		// 	// console.log('输入时间');
+		// 	// todo.expire = "2017/11/1"
+		// 	try {
+		// 	  const {action, year, month, day} = await DatePickerAndroid.open({
+		// 	    // Use `new Date()` for current date.
+		// 	    // May 25 2020. Month 0 is January.
+		// 	    date: new Date(),
+		// 	    mode:'spinner'		    
+		// 	  });
+		// 	  if (action == DatePickerAndroid.dismissedAction) {
+		// 	    // Selected year, month (0-11), day
+		// 	    todo.expire = temp
 			    
-			  }else{
-			  	var date = new Date(year,month,day)
-			  	// var getMonth = parseInt(date.getMonth())+1;
-			  	// todo.expire = "Expire date: "+date.getFullYear()+"/"+(parseInt(date.getMonth())+1)+"/"+date.getDate()
-			  	todo.expire = date
-			}
+		// 	  }else{
+		// 	  	var date = new Date(year,month,day)
+		// 	  	// var getMonth = parseInt(date.getMonth())+1;
+		// 	  	// todo.expire = "Expire date: "+date.getFullYear()+"/"+(parseInt(date.getMonth())+1)+"/"+date.getDate()
+		// 	  	todo.expire = date
+		// 	}
 			  
-			  // console.log(todo.expire);
-			} catch ({code, message}) {
-			  console.warn('Cannot open date picker', message);
-			}
-		}
-		updateTodoChecked()
+		// 	  // console.log(todo.expire);
+		// 	} catch ({code, message}) {
+		// 	  console.warn('Cannot open date picker', message);
+		// 	}
+		// }
+		// updateTodoChecked()
+		this.changeDate()
 	})
 
 	changeDate = (async()=>{
@@ -120,10 +122,15 @@ class TodoItem extends React.Component {
 		    flexDirection: 'row',
 		    backgroundColor: "#F5F5F5",
 		    paddingTop: 30,
+		    paddingLeft:10,
+		    paddingRight:10,
 		  },
 		  content: {
 		    flex: 1,
 		    flexDirection: 'row'
+		  },
+		  button:{
+		    color:'#b131d8'
 		  },
 		  expire_date:{
 		  	flex: 1
@@ -148,7 +155,7 @@ class TodoItem extends React.Component {
 					<Text style={[styles.expire_date, color.veryfresh && styles.gray_color, color.nearexpire && styles.red_color, color.isexpired && styles.dark_gray_color]} onPress={this.changeDate}>
 						{(expire !=null)?("Expire date:\n"+expireDate.getFullYear()+"/"+(parseInt(expireDate.getMonth())+1)+"/"+expireDate.getDate()):""}
 					</Text>
-					<Button style={styles.content} title="delete" onPress={this.deleteTodo} ref='button'/>
+					<Button color='#b131d8' style={[styles.content, styles.button]} title="delete" onPress={this.deleteTodo} ref='button'/>
 				</View>
 		)
 	};
