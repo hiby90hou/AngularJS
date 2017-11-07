@@ -4,6 +4,8 @@ import TodoHeader from '../TodoHeader/'
 import TodoMain from '../TodoMain/'
 import TodoFooter from '../TodoFooter/'
 import ReadFile from '../readFile/'
+import Network from '../network/'
+import Login from '../Login/'
 
 var ToolbarAndroid = require('ToolbarAndroid');
 
@@ -17,8 +19,9 @@ class App extends Component {
       {isDone:false,title:'cake',expire:null}
       ],
       isAllDone:false,
-      userName: 'XXX',
-      lastGistUrl: '###'
+      userName: null,
+      password: null,
+      uploadTime: null
     }
   }
 
@@ -40,15 +43,17 @@ class App extends Component {
     const todos = newState.todos
     const isAllDone = newState.isAllDone
     const userName = newState.userName
-    const lastGistUrl = newState.lastGistUrl
+    const password = newState.password
+    const uploadTime = newState.uploadTime
 
     this.setState({
       todos,
       isAllDone,
       userName,
-      lastGistUrl
+      password,
+      uploadTime
     })
-  }  
+  }
 
   deleteTodo = (index) => {
     const todos = this.state.todos;
@@ -126,6 +131,20 @@ class App extends Component {
         alignItems: 'center',
         paddingTop:10,
         paddingBottom:10
+      },
+      loginContainer:{
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center'
+      },
+      imageBg:{
+        backgroundColor: '#ccc',
+        flex: 1,
+        position: 'absolute',
+        width: '100%',
+        height: '100%',
+        justifyContent: 'center'
       }
     })
 
@@ -151,29 +170,51 @@ class App extends Component {
         initState:this.initState
       }
 
-    return (
-      <ScrollView style={{flex: 1}}>
+    //定义network标签的props
+    const networkProps = {
+        state: this.state,
+        initState:this.initState
+      }
 
-      <ToolbarAndroid
-      logo={require('../../resources/logo.png')}
-      title="My Shopping List"
-      style={styles.toolbar}
-      actions={[{title: 'Edit your profile'},{title: 'Setting'}]}
-      onActionSelected={this.onActionSelected}></ToolbarAndroid>
+    if(this.state.userName==null){
+      return(
+        <View style={styles.loginContainer}>
+          <Image
+            style={styles.imageBg}
+            source={require('../../resources/purple-bg.jpg')}
+          />
+          <Login/>
+        </View>
+        )
+    }else{
+      return (
+        <ScrollView style={{flex: 1}}>
 
-      <View style={styles.header}>
-        <Text>Please enter your item name and press ✓</Text>
+          <ToolbarAndroid
+          logo={require('../../resources/logo.png')}
+          title="My Shopping List"
+          style={styles.toolbar}
+          actions={[{title: 'Edit your profile'},{title: 'Setting'}]}
+          onActionSelected={this.onActionSelected}></ToolbarAndroid>
 
-        <TodoHeader addTodo={this.addTodo}/>
-      </View>
-      
-      <TodoMain {...mainProps}/>
-      <TodoFooter {...footerProps}/>
+        <View style={styles.header}>
+          <Text>Please enter your item name and press ✓</Text>
 
-      {/*<Image source={require('../../resources/logo.png')} style={{width: 193, height: 110}} style={{flex: 1, alignItems: 'center'}}/>*/}
-      <ReadFile {...readfileProps}/>
-      </ScrollView>
-    );
+          <TodoHeader addTodo={this.addTodo}/>
+        </View>
+        
+        <TodoMain {...mainProps}/>
+        <TodoFooter {...footerProps}/>
+
+        {/*<Image source={require('../../resources/logo.png')} style={{width: 193, height: 110}} style={{flex: 1, alignItems: 'center'}}/>
+        <Network {...networkProps}/>
+      */}
+        <ReadFile {...readfileProps}/>
+        
+
+        </ScrollView>
+      );
+    }
   }
 }
 

@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import { View, Text,Button, TextInput, Alert } from 'react-native';
+import { View, Text,Button, TextInput, Alert,CheckBox } from 'react-native';
 
 class TodoFooter extends Component {
 
@@ -30,9 +30,9 @@ class TodoFooter extends Component {
     // const display = doneCount>0 ? 'block' : 'none'
     return (
       <View className="todo-footer">
-        <View>
-          <TextInput type="checkbox" checked={isAllDone} onChange={this.handleChange}/>
-        </View>
+        {/*<View>
+          <CheckBox type="checkbox" value={isAllDone} onChange={this.handleChange}/>
+        </View>*/}
         <View style={{marginLeft:10,marginRight:10}}>
           <Text>Complete {doneCount} / Total {totalCount}</Text>
           <Button color='#b131d8' title="delete expired item" className="btn btn-danger" onPress={this.deleteExpireItem}/>

@@ -7,43 +7,48 @@ componentWillMount() {
   const {state, initState} = this.props
   //read file
   // require the module
-var RNFS = require('react-native-fs');
-console.log(RNFS.ExternalDirectoryPath+'/MyShoppingList/');
+  var RNFS = require('react-native-fs');
+  // console.log(RNFS.ExternalDirectoryPath+'/MyShoppingList/');
 
-// get a list of files and directories in the main bundle
-RNFS.readDir(RNFS.ExternalDirectoryPath+'/MyShoppingList/') // On Android, use "RNFS.DocumentDirectoryPath" (MainBundlePath is not defined)
-  .then((result) => {
-    console.log('GOT RESULT', result);
+  // get a list of files and directories in the main bundle
+  // RNFS.readDir(RNFS.ExternalDirectoryPath+'/MyShoppingList/') // On Android, use "RNFS.DocumentDirectoryPath" (MainBundlePath is not defined)
+    // .then((result) => {
+    //   console.log('GOT RESULT', result);
 
-    // stat the 1st file
-    return Promise.all([RNFS.stat(result[0].path), result[0].path]);
-  })
-  .then((statResult) => {
-    if (statResult[0].isFile()) {
-      // if we have a file, read it
-      return RNFS.readFile(statResult[1], 'utf8');
-    }
+    //   // stat the 1st file
+    //   return Promise.all([RNFS.stat(result[0].path), result[0].path]);
+    // })
 
-    return 'no file';
-  })
-  .then((contents) => {
-    // log the file contents
-    let newState = JSON.parse(contents)
-    console.log(newState)
-    initState(newState)
-  })
-  .catch((err) => {
-    console.log(err.message, err.code);
-  });
-}
+    //create a path you want to read
+    const path = RNFS.ExternalDirectoryPath + '/MyShoppingList/'+state.userName+'shoppingListData.json';
+    RNFS.readFile(path)
+    .then((statResult) => {
+      console.log(RNFS.exists(path));
+      if (RNFS.exists(path)) {
+        // if we have a file, read it
+        return RNFS.readFile(path, 'utf8');
+      }
+
+      return 'no file';
+    })
+    .then((contents) => {
+      // log the file contents
+      let newState = JSON.parse(contents)
+      console.log(newState)
+      initState(newState)
+    })
+    .catch((err) => {
+      console.log(err.message, err.code);
+    });
+  }
 
 
   render() {
 
 
 //delete file
-// create a path you want to delete
-// var path = RNFS.DocumentDirectoryPath + '/test2.txt';
+//create a path you want to delete
+// var path = RNFS.ExternalDirectoryPath+'/MyShoppingList/shoppingListData.json';
 
 // return RNFS.unlink(path)
 //   .then(() => {
@@ -64,8 +69,13 @@ RNFS.readDir(RNFS.ExternalDirectoryPath+'/MyShoppingList/') // On Android, use "
     )
   }
 
-  componentWillUnmount(){
-    const {state} = this.props
+componentWillUnmount(){
+    const {state, initState} = this.props
+
+    // update upload time
+    let newState = state
+    newState.uploadTime = new Date()
+    initState(newState)
 
 //write file
     // require the module
@@ -75,7 +85,7 @@ var saveStr = JSON.stringify(state)
 console.log(saveStr);
 
 // create a path you want to write to
-var path = RNFS.ExternalDirectoryPath + '/MyShoppingList/shoppingListData.json';
+var path = RNFS.ExternalDirectoryPath + '/MyShoppingList/'+state.userName+'shoppingListData.json';
 
 //make dir for this file
 RNFS.mkdir(RNFS.ExternalDirectoryPath +'/MyShoppingList/')
