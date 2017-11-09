@@ -39,6 +39,7 @@ class App extends Component {
     })
   }
 
+  // update state
   initState = (newState) =>{
     const todos = newState.todos
     const isAllDone = newState.isAllDone
@@ -52,6 +53,13 @@ class App extends Component {
       userName,
       password,
       uploadTime
+    })
+  }
+
+  //Only update User Name
+  updateUserName = (username) =>{
+    this.setState({
+      userName:username
     })
   }
 
@@ -98,6 +106,7 @@ class App extends Component {
       isAllDone:isAllDone.length===0&&todos.length>0
     })
   }
+
   //设置所有todos的选中状态
   changeAllChecked = (isAllDone) =>{
     //更新todos中所有TODO的状态
@@ -176,6 +185,11 @@ class App extends Component {
         initState:this.initState
       }
 
+    //定义login标签的props
+    const loginProps = {
+        updateUserName:this.updateUserName
+    }
+
     if(this.state.userName==null){
       return(
         <View style={styles.loginContainer}>
@@ -183,7 +197,7 @@ class App extends Component {
             style={styles.imageBg}
             source={require('../../resources/purple-bg.jpg')}
           />
-          <Login/>
+          <Login {...loginProps}/>
         </View>
         )
     }else{

@@ -1,45 +1,61 @@
 import React, {Component} from 'react'
-import { View, Text, Button, TextInput, Alert, StyleSheet, Switch } from 'react-native';
+import { View, Text, Button, TextInput, Alert, StyleSheet, Switch, TouchableOpacity, Image } from 'react-native';
 
 class Login extends Component {
     constructor(props){
     super(props);
-    this.state = {times:0, userName: ''}
+    this.state = {
+      inputUserName: '',
+      inputPassword: '',
+      autoLogin: false
+    }
   }
 
+  
+
   loginCheck = ()=>{
+    let correctUserName = 'hiby';
+    let correctPassword = 'hiby';
+    // const {updateUserName} = this.props
+    if(correctUserName == this.state.inputUserName &&
+      correctPassword == this.state.inputPassword){
+        updateUserName(correctUserName)
+    }else{
       Alert.alert(
-      'Wrong Password',
-      'Please try again',
+        'Wrong Password',
+        'Please try again',
+        [       
+          {text: 'OK', onPress: () =>{console.log('inputUserName:'+this.state.inputUserName);console.log('inputPassword:'+this.state.inputPassword);}},
+        ],
+        { cancelable: false }
+      )
+    }
+  }
+
+  closeWindow = ()=>{
+    Alert.alert(
+      'Skip Sign In',
+      'Are you sure to skip sign in?',
       [       
-        {text: 'OK', onPress: () =>{console.log('state:'+this.state.userName);}},
+        {text: 'Yes', onPress: () =>{this.defaultLogin()}},
+        {text: 'No', onPress: () =>{}}
       ],
-      { cancelable: false }
+      { cancelable: true }
     )
   }
 
-  handleUserName = (userName) =>{ 
-    // if(this.state.text==""){
-    //   return
-    // }
-    return this.setState({userName})
-    
-    //根据输入的数据, 生成一个todo对象
-    // const todo = {
-    //   title: this.state.text,
-    //   isDone: false,
-    //   expire:null
-    // }
-    //调用方法, 添加todo到todos
-    // this.props.addTodo(todo)
+  defaultLogin = ()=>{
+    const {updateUserName} = this.props
+    console.log('defaultLogin');
+    let correctUserName = 'default'
+    updateUserName(correctUserName)
+  }
 
-    //格式化state.text
-    // this.setState({
-    //   text:''
-    // })
-
-    //清空input
-    // this.textInput.clear()
+  handleUserName = (inputUserName) =>{ 
+    return this.setState({inputUserName})
+  }
+  handlePassword = (inputPassword) =>{ 
+    return this.setState({inputPassword})
   }
 
   render() {
@@ -48,9 +64,9 @@ class Login extends Component {
       mainContainer: {
         // flex:1,
         width:300,
-        height:300,
+        height:400,
         backgroundColor: '#fff',
-        borderRadius:20
+        borderRadius:20,
       },
       titleText:{
         fontWeight: 'bold',
@@ -80,31 +96,54 @@ class Login extends Component {
         borderRadius:10
       },
       resetText:{
-        marginTop:10
+        marginTop:10,
+        textAlign:"center",
       },
       rememberBox:{
         flexDirection: 'row',
         justifyContent: 'flex-end',
         alignItems: 'center',
+      },
+      button:{
+        width:20,
+        height:20,
+        alignSelf: 'flex-end',
+        marginRight:10,
+        marginTop:10
+      },
+      nav:{
+        flexDirection: 'row',
+        justifyContent: 'space-between',
       }
 
     })
-    const {doneCount, totalCount, isAllDone} = this.props
+    // const {doneCount, totalCount, isAllDone} = this.props
     // const display = doneCount>0 ? 'block' : 'none'
     return (
       <View style = {styles.mainContainer}>
-        <Text style = {styles.titleText}>Sign In</Text>
+        <View style = {styles.nav}>
+          <View style={styles.button}/>
+          <Text style = {styles.titleText}>Sign In</Text>
+          <TouchableOpacity onPress={this.closeWindow}>
+            <Image
+              style={styles.button}
+              source={require('../../resources/close.png')}
+            />
+          </TouchableOpacity>
+        </View>
         <View style = {styles.line}></View>
         <View style = {styles.smallContainer}>
-          <TextInput underlineColorAndroid = "#b131d8" type="text" placeholder="Please input your user name" onChangeText={this.handleUserName.bind(this)} ref={input => { this.textInput = input }}/>
-          <TextInput underlineColorAndroid = "#b131d8" type="text" placeholder="Please input your password" />
+          <TextInput underlineColorAndroid = "#b131d8" type="text" placeholder="Please input your user name" onChangeText={this.handleUserName.bind(this)} ref={input => { this.userInput = input }}/>
+          <TextInput underlineColorAndroid = "#b131d8" type="text" placeholder="Please input your password" onChangeText={this.handlePassword.bind(this)} ref={input => { this.pwInput = input }}/>
           <View style = {styles.rememberBox}>
+            <Text style={{color:"#ccc"}}>Auto Login</Text>
             <Switch/>
-            <Text style={{color:"#ccc"}}>Remember password</Text>
+            
             
           </View>
           <View style = {styles.gap}></View>
-          <Button color='#b131d8' onPress = {this.loginCheck} title="Sign In or Sign up"/>
+          <Button color='#b131d8' onPress = {this.loginCheck} title="Sign In"/>
+          <View style = {styles.gap}></View>
           
           <Text style={styles.resetText}>Reset your password</Text>
         </View>
