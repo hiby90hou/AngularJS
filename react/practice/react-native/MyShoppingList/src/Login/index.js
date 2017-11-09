@@ -14,6 +14,8 @@ class Login extends Component {
   
 
   loginCheck = ()=>{
+    const {updateUserName} = this.props
+
     let correctUserName = 'hiby';
     let correctPassword = 'hiby';
     // const {updateUserName} = this.props
@@ -134,7 +136,7 @@ class Login extends Component {
         <View style = {styles.line}></View>
         <View style = {styles.smallContainer}>
           <TextInput underlineColorAndroid = "#b131d8" type="text" placeholder="Please input your user name" onChangeText={this.handleUserName.bind(this)} ref={input => { this.userInput = input }}/>
-          <TextInput underlineColorAndroid = "#b131d8" type="text" placeholder="Please input your password" onChangeText={this.handlePassword.bind(this)} ref={input => { this.pwInput = input }}/>
+          <TextInput underlineColorAndroid = "#b131d8" type="text" placeholder="Please input your password" secureTextEntry={true} onChangeText={this.handlePassword.bind(this)} ref={input => { this.pwInput = input }}/>
           <View style = {styles.rememberBox}>
             <Text style={{color:"#ccc"}}>Auto Login</Text>
             <Switch/>
