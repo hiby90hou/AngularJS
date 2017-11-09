@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import { View, Text, Button, TextInput, Alert, StyleSheet, Switch, TouchableOpacity, Image } from 'react-native';
+import CheckPassword from '../checkPassword/index.js'
 
 class Login extends Component {
     constructor(props){
@@ -7,6 +8,7 @@ class Login extends Component {
     this.state = {
       inputUserName: '',
       inputPassword: '',
+      correctPassword:'',
       autoLogin: false
     }
   }
@@ -66,7 +68,7 @@ class Login extends Component {
       mainContainer: {
         // flex:1,
         width:300,
-        height:400,
+        height:300,
         backgroundColor: '#fff',
         borderRadius:20,
       },
@@ -84,7 +86,7 @@ class Login extends Component {
         // backgroundColor:'#ccc'
       },
       line:{
-        marginTop:20,
+        marginTop:15,
         marginBottom:10,
         borderBottomWidth:1,
         borderColor:'#ccc'
@@ -145,10 +147,10 @@ class Login extends Component {
           </View>
           <View style = {styles.gap}></View>
           <Button color='#b131d8' onPress = {this.loginCheck} title="Sign In"/>
-          <View style = {styles.gap}></View>
-          
           <Text style={styles.resetText}>Reset your password</Text>
+
         </View>
+        <CheckPassword/>
       </View>
     )
   }
