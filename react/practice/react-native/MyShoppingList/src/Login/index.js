@@ -49,11 +49,10 @@ class Login extends Component {
 
   // change signUp state, if signup==true, open the signup page
   handleSignUp =()=>{
-    const signUp = !this.state.signUp
     this.setState({
-      signUp
+      signUp: !this.state.signUp
     })
-    console.log('SignUp'+this.state.SignUp);
+    console.log('SignUp'+this.state.signUp);
   }
   //skip sign in and go to default user page
   closeWindow = ()=>{
@@ -159,7 +158,9 @@ class Login extends Component {
     }
 
     const signUpProps = {
-        handleSignUp: this.handleSignUp
+        handleSignUp: this.handleSignUp,
+        updateUserName: this.props.updateUserName,
+        signUp: this.state.signUp
     }
 
     if(this.state.signUp){
