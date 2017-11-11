@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
-import { View, Text, Button, TextInput, Alert, StyleSheet, Switch, TouchableOpacity, Image } from 'react-native';
+import { View, Text, Button, TextInput, Alert, StyleSheet, Switch, TouchableOpacity, Image,
+  ToastAndroid, } from 'react-native';
 import CheckPassword from '../checkPassword/index.js'
+import SignUp from '../signUp/'
 
 class Login extends Component {
     constructor(props){
@@ -8,12 +10,12 @@ class Login extends Component {
     this.state = {
       inputUserName: '',
       inputPassword: '',
-      correctPassword:'',
-      autoLogin: false
+      checkPassword:false,
+      autoLogin: false,
+      signUp: false
     }
   }
 
-  
 
   loginCheck = ()=>{
     const {updateUserName} = this.props
@@ -36,6 +38,24 @@ class Login extends Component {
     }
   }
 
+
+  //pass password check
+  passCheck =(result)=>{
+    this.setState({
+      checkPassword:result
+    })
+    console.log('checkPassword'+this.state.checkPassword);
+  }
+
+  // change signUp state, if signup==true, open the signup page
+  handleSignUp =()=>{
+    const signUp = !this.state.signUp
+    this.setState({
+      signUp
+    })
+    console.log('SignUp'+this.state.SignUp);
+  }
+  //skip sign in and go to default user page
   closeWindow = ()=>{
     Alert.alert(
       'Skip Sign In',
@@ -93,7 +113,6 @@ class Login extends Component {
 
       },
       gap:{
-        marginTop:20,
         marginBottom:10,
       },
       loginCheck:{
@@ -102,6 +121,9 @@ class Login extends Component {
       resetText:{
         marginTop:10,
         textAlign:"center",
+        color:"white",
+        fontWeight:"800",
+        fontSize:15
       },
       rememberBox:{
         flexDirection: 'row',
@@ -118,41 +140,67 @@ class Login extends Component {
       nav:{
         flexDirection: 'row',
         justifyContent: 'space-between',
+      },
+      signUp:{
+        marginTop:20,
+        alignItems: 'center',
+      },
+      SignUpText:{
+        textAlign:"center"
       }
 
     })
-    // const {doneCount, totalCount, isAllDone} = this.props
-    // const display = doneCount>0 ? 'block' : 'none'
-    return (
-      <View style = {styles.mainContainer}>
-        <View style = {styles.nav}>
-          <View style={styles.button}/>
-          <Text style = {styles.titleText}>Sign In</Text>
-          <TouchableOpacity onPress={this.closeWindow}>
-            <Image
-              style={styles.button}
-              source={require('../../resources/close.png')}
-            />
-          </TouchableOpacity>
-        </View>
-        <View style = {styles.line}></View>
-        <View style = {styles.smallContainer}>
-          <TextInput underlineColorAndroid = "#b131d8" type="text" placeholder="Please input your user name" onChangeText={this.handleUserName.bind(this)} ref={input => { this.userInput = input }}/>
-          <TextInput underlineColorAndroid = "#b131d8" type="text" placeholder="Please input your password" secureTextEntry={true} onChangeText={this.handlePassword.bind(this)} ref={input => { this.pwInput = input }}/>
-          <View style = {styles.rememberBox}>
-            <Text style={{color:"#ccc"}}>Auto Login</Text>
-            <Switch/>
-            
-            
-          </View>
-          <View style = {styles.gap}></View>
-          <Button color='#b131d8' onPress = {this.loginCheck} title="Sign In"/>
-          <Text style={styles.resetText}>Reset your password</Text>
 
+    const checkPasswordProps = {
+        updateUserName:this.props.updateUserName,
+        inputUserName:this.state.inputUserName,
+        inputPassword:this.state.inputPassword,
+        passCheck:this.passCheck
+    }
+
+    const signUpProps = {
+        handleSignUp: this.handleSignUp
+    }
+
+    if(this.state.signUp){
+      return(
+        <SignUp {...signUpProps}/>
+        )
+    }else{
+      return (
+        <View>
+          <View style = {styles.mainContainer}>
+            <View style = {styles.nav}>
+              <View style= {styles.button}/>
+              <Text style = {styles.titleText}>Sign In</Text>
+              <TouchableOpacity onPress={this.closeWindow}>
+                <Image
+                  style={styles.button}
+                  source={require('../../resources/close.png')}
+                />
+              </TouchableOpacity>
+            </View>
+            <View style = {styles.line}></View>
+            <View style = {styles.smallContainer}>
+              <TextInput underlineColorAndroid = "#b131d8" type="text" placeholder="Please input your user name" onChangeText={this.handleUserName.bind(this)} ref={input => { this.userInput = input }}/>
+              <TextInput underlineColorAndroid = "#b131d8" type="text" placeholder="Please input your password" secureTextEntry={true} onChangeText={this.handlePassword.bind(this)} ref={input => { this.pwInput = input }}/>
+              <View style = {styles.rememberBox}>
+                <Text style={{color:"#ccc"}}>Auto Login</Text>
+                <Switch/>   
+              </View>
+              <View style = {styles.gap}></View>
+              <Button color='#b131d8' onPress = {this.loginCheck} title="Sign In"/>
+              <TouchableOpacity style= {styles.signUp} onPress={this.handleSignUp}>
+                <Text>Don't have an account?Sign Up Here!</Text>
+              </TouchableOpacity>
+
+            </View>
+            {/*<CheckPassword {...checkPasswordProps}/>*/}
+          </View>
+          <Text style={styles.resetText}>Reset your password</Text>
         </View>
-        <CheckPassword/>
-      </View>
-    )
+      )
+    }
   }
 }
 
