@@ -11,22 +11,33 @@ class signUp extends Component {
       inputPassword1: '',
       inputPassword2: ''
     }
+    this.backButtonListener = null;
   }
   //when we go to this page, run componentDidMount 
   componentDidMount(){
+  	console.log('componentWillmount');
   	//go back button setting
-    const {handleSignUp, signUp} = this.props
-    var count = 0
-	BackHandler.addEventListener('hardwareBackPress',function(){
-	   if(signUp==true && count == 0){
-	    ToastAndroid.show('Go back to Login Page',ToastAndroid.SHORT);
+	this.backButtonListener = BackHandler.addEventListener('hardwareBackPress',()=>{
+		const {handleSignUp, signUp} = this.props
+  	// console.log(this.props);
+	   if(signUp==true){
+	   	console.log('goback');
+	  	  ToastAndroid.show('Go back to Login Page',ToastAndroid.SHORT);
 			handleSignUp()
-			count = 1
 	    	return true
-	   }	  
+	   }
 	  return false
 	})
+	
   }
+
+  componentWillUnmount(){
+
+  	// BackHandler.removeEventListener('hardwareBackPress',()=>{});
+  	this.backButtonListener.remove();
+  	console.log('componentWillUnmount');
+  }
+
 
   handleUserName = (inputUserName) =>{ 
     return this.setState({inputUserName})

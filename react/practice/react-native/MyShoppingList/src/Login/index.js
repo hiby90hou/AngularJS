@@ -54,6 +54,14 @@ class Login extends Component {
     })
     console.log('SignUp'+this.state.signUp);
   }
+
+  closeSignUp = () =>{
+    this.setState({
+      signUp: false
+    })
+    console.log('closeSignUp'+this.state.signUp);
+  }
+
   //skip sign in and go to default user page
   closeWindow = ()=>{
     Alert.alert(
