@@ -1,6 +1,6 @@
 import React from 'react';
 // import PubSub from 'pubsub-js'
-import {Text, View, CheckBox, Button, StyleSheet,DatePickerAndroid, Alert} from 'react-native';
+import {Text, View, CheckBox, Button, StyleSheet,DatePickerAndroid, Alert,ToastAndroid} from 'react-native';
 
 class TodoItem extends React.Component {
 	//checkbox状态改变的监听回调函数
@@ -11,15 +11,16 @@ class TodoItem extends React.Component {
 		let self = this
 		
 		if(todo.isDone){
-		Alert.alert(
-		  'please enter item expire date',
-		  '',
-		  [		    
-		    {text: 'Yes', onPress: () =>{self.changeDate()}},
-		  ],
-  			{ cancelable: false }
-		)
-		// this.changeDate()
+		ToastAndroid.showWithGravityAndOffset('please enter item expire date',ToastAndroid.SHORT, ToastAndroid.TOP, 0,50);
+		// Alert.alert(
+		//   'please enter item expire date',
+		//   '',
+		//   [		    
+		//     {text: 'Yes', onPress: () =>{self.changeDate()}},
+		//   ],
+  // 			{ cancelable: false }
+		// )
+		 this.changeDate()
 	    }
 	    else{
 	    	self.changeDate()

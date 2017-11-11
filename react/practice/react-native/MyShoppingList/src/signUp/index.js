@@ -5,13 +5,13 @@ import { View, Text, Button, TextInput, Alert, StyleSheet, Switch, TouchableOpac
 
 class signUp extends Component {
     constructor(props){
-    super(props);
+    super(props)
     this.state = {
       inputUserName: '',
       inputPassword1: '',
       inputPassword2: ''
     }
-    this.backButtonListener = null;
+    this.backButtonListener = null
   }
   //when we go to this page, run componentDidMount 
   componentDidMount(){
@@ -22,7 +22,7 @@ class signUp extends Component {
   	// console.log(this.props);
 	   if(signUp==true){
 	   	console.log('goback');
-	  	  ToastAndroid.show('Go back to Login Page',ToastAndroid.SHORT);
+	  	  ToastAndroid.show('Go back to Sign in Page',ToastAndroid.SHORT);
 			handleSignUp()
 	    	return true
 	   }
