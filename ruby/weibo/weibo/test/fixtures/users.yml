@@ -3,7 +3,9 @@
 one:
   userName: MyString
   email: MyString
+  password: MyString
 
 two:
   userName: MyString
   email: MyString
+  password: MyString
