@@ -1,0 +1,2 @@
+class SataicPagesController < ApplicationController
+end
