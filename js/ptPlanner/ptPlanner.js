@@ -1,5 +1,5 @@
-var endPoint = 'Prahran';
-var startPoint = 'Hawthorn';
+var endPoint = 'Flinders Street';
+var startPoint = 'a';
 
 console.log('startPoint' + startPoint);
 console.log('endPoint' + endPoint);
@@ -8,29 +8,26 @@ var trainMap = {
   AlameinLine: ['Flinders Street', 'Richmond', 'East Richmond', 'Burnley', 'Hawthorn', 'Glenferrie'],
   GlenWaverlyLine: ['Flagstaff', 'Melbourne Central', 'Parliament', 'Richmond', 'Kooyong', 'Tooronga'],
   SandringhamLine: ['Southern Cross', 'Richmond', 'South Yarra', 'Prahran', 'Windsor'],
+  testLine:['a','b','c','Prahran','d','e']
 
 }
-var result = routeFinding(startPoint,endPoint,trainMap);
+var callback = function(result) {printResult(startPoint, endPoint, result);}
+routeFinding(startPoint, endPoint, trainMap,[],[],callback);
+// printResult(startPoint, endPoint, result);
 
+/*
+*function name: routeFinding
+*input:startPoint(string), 
+       endPoint(string), 
+       trainMap(object),
+       aviodInter(array),
+       stationList(array)
+       callback(function)
+*return:result(array) 
+*/
 
-//make an array contain all of the station name
-// var totalArr = [];
+function routeFinding(startPoint, endPoint, trainMap,aviodInter,stationList,callback) {
 
-// for (index in trainMap) {
-//   totalArr = totalArr.concat(trainMap[index]);
-// }
-// console.log(totalArr);
-
-// startPoint = prompt("please input startPoint");
-// endPoint = prompt("please input endPoint");
-
-// while(startPoint==null|| endPoint==null ||totalArr.toString().indexOf(startPoint)<0 || totalArr.toString().indexOf(endPoint)<0 ){
-//   alert("Input error! Please try again")
-//   startPoint = prompt("please input startPoint");
-//   endPoint = prompt("please input endPoint");
-
-// }
-function routeFinding(startPoint,endPoint,trainMap) {
   // find out the intersection
   intersectionArr = findIntersection(trainMap);
 
@@ -43,23 +40,83 @@ function routeFinding(startPoint,endPoint,trainMap) {
     var result = calcOneLine(startPoint, endPoint, SameLineCheck.startLineName, trainMap);
     console.log(result);
 
+    // return result;
+    callback(result);
+
   } else
   //when start point and end point in the different line
   {
-    console.log(intersectionArr[0])
-    console.log(SameLineCheck.startLineName[0])
-    var result1 = calcOneLine(startPoint, intersectionArr[0], SameLineCheck.startLineName[0], trainMap);
-    var result2 = calcOneLine(intersectionArr[0], endPoint, SameLineCheck.endLineName[0], trainMap);
-    console.log('result1:' + result1)
-    console.log('result2:' + result2)
-    result1.pop();
-    var result = result1.concat(result2);
-    console.log(result);
+    //check if start point and end point is directly connect or not
+    var connectedLine = {};
+    //store the index number of intersectionArr
+    connectedLine.num = -1;
+
+    intersectionArr.forEach(
+      function(value,index) {
+        var startPart = isInSameLineCheck(startPoint, intersectionArr[index], trainMap);
+        var endPart = isInSameLineCheck(intersectionArr[index], endPoint, trainMap);
+        if (startPart.inSameLine && endPart.inSameLine) {
+          connectedLine.num = index;
+          console.log("connectedLine.num = "+index)
+        }
+      }
+    );
+
+    // when start point and end point can be connected by 1 intersection
+    if (connectedLine.num !== -1) {
+      var result1 = calcOneLine(startPoint, intersectionArr[connectedLine.num], SameLineCheck.startLineName[0], trainMap);
+      var result2 = calcOneLine(intersectionArr[connectedLine.num], endPoint, SameLineCheck.endLineName[0], trainMap);
+      console.log('result1:' + result1)
+      console.log('result2:' + result2)
+      result1.pop();
+      if(stationList[0]){
+        stationList.pop();
+      }
+      console.log('stationList ='+ stationList);
+      result = stationList.concat(result1,result2).slice();
+      console.log(result);
+
+      // return result;
+      callback(result);
+    }
+    else{
+      console.log("start point and end point cannot be connected by 1 intersection");
+
+      //remove current startPoint from intersectionArr
+      if(intersectionArr.indexOf(startPoint)>-1){
+        intersectionArr.splice(intersectionArr.indexOf(startPoint), 1);
+      }
+
+      //remove avoid intersection from intersectionArr
+      aviodInter.forEach(
+        function(value,index){
+          if(intersectionArr.indexOf(value)>-1){
+            intersectionArr.splice(intersectionArr.indexOf(value),1);
+          }
+        }
+        )
+
+      aviodInter.push(startPoint);
+
+
+      //find out the close intersection from startpoint
+      var closeIntersectionFromStart = []
+      intersectionArr.forEach(function(value,index){
+        var startPart = isInSameLineCheck(startPoint, intersectionArr[index], trainMap);
+        console.log('startPart =')
+        console.log(startPart);
+        if(startPart.inSameLine){
+
+          stationList = stationList.concat(calcOneLine(startPoint, value, startPart.startLineName, trainMap));
+          console.log('stationList ='+ stationList)
+          //call function itself
+          routeFinding(intersectionArr[index], endPoint, trainMap,aviodInter,stationList,callback);
+          
+        }
+      }
+        )
+    }
   }
-
-  printResult(startPoint, endPoint, result);
-
-  return result;
 }
 
 
@@ -99,13 +156,10 @@ function calcOneLine(startPoint, endPoint, startLineName, trainMap) {
 
     startNum = currentLine.length - startNum - 1;
     endNum = currentLine.length - endNum - 1;
-    console.log("startNum=" + startNum);
-    console.log("endNum=" + endNum);
   }
 
   currentLine = currentLine.slice(0, endNum + 1);
   currentLine = currentLine.slice(startNum);
-  console.log('currentLine = ' + currentLine);
 
   return currentLine;
 }
@@ -151,11 +205,11 @@ function isInSameLineCheck(startPoint, endPoint, trainMap) {
     for (var i = 0; i < trainMap[index].length; i++) {
       if (startPoint == trainMap[index][i]) {
         startLineName.push(index);
-        console.log(startLineName);
+        // console.log(startLineName);
       }
       if (endPoint == trainMap[index][i]) {
         endLineName.push(index);
-        console.log(endLineName);
+        // console.log(endLineName);
       }
     }
   }
