@@ -1,5 +1,5 @@
-var startPoint = 'Flinders Street';
-var endPoint = 'a';
+var endPoint = 'Flagstaff';
+var startPoint = 'a';
 
 console.log('startPoint' + startPoint);
 console.log('endPoint' + endPoint);
@@ -11,6 +11,35 @@ var trainMap = {
   testLine:['a','b','c','Prahran','d','e']
 
 }
+
+// interface setting
+function Dropdown1() {
+    document.getElementById("myDropdown1").classList.toggle("show");
+}
+
+function Dropdown2() {
+    document.getElementById("myDropdown2").classList.toggle("show");
+}
+
+// Close the dropdown menu if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+
+
+var bigContainer = document.getElementById('myDropdown');
+
+
 var callback = function(result) {printResult(startPoint, endPoint, result);}
 
 routeFinding(startPoint, endPoint, trainMap,[],[],callback);
