@@ -4,47 +4,103 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<title>ptPlanner</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+	<link href="https://fonts.googleapis.com/css?family=Aldrich" rel="stylesheet">
 	<style type="text/css">
-		.floatLeft{
-			float: left;
+		.bigContainer{
+			max-width: 1000px;
+		}
+		.banner{
+			background-color: #CCC;
+			height: 100px;
+			font-size: larger;
+			text-align: center;
+			line-height: 100px;
+			font-family: 'Aldrich', sans-serif;
+			margin-bottom: 10px;
+		}
+		.dropdownCus{
+			margin-top: 10px;
+		}
+		.text-center{
+			text-align: center;
+			margin: 0 auto;
+		}
+		.buttonCus{
+			margin: 30px 0;
 		}
 	</style>
 
 </head>
 <body>
-	<div class="container">
+	<div class="container bigContainer">
+		<div class="row banner">
+			<div class='col-sm'>
+				<span>ptPlanner</span>
+			</div>
+		</div>
 		<div class="row">
-			<div class='col-sm'>please select an origin:
-					<div class="dropdown">
-				  <button class="btn btn-secondary dropdown-toggle btn-info" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				    Dropdown button
-				  </button>
-				  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-				    <a class="dropdown-item" href="#">Action</a>
-				    <a class="dropdown-item" href="#">Another action</a>
-				    <div class="dropdown-divider"></div>
-				    <a class="dropdown-item" href="#">Something else here</a>
-				  </div>
+			<div class='col-sm-6'>
+				<div class='row'><p class="text-center text-uppercase">please select an origin:</p></div>
+				<div class='row'>
+					<div class='col-sm-6'>
+						Line Name:
+						<select class="custom-select">
+						  <option selected>Open this select menu</option>
+						  <option value="1">One</option>
+						  <option value="2">Two</option>
+						  <option value="3">Three</option>
+						</select>
+					</div>
+					<div class='col-sm-6'>
+						Station Name:
+						<select class="custom-select">
+						  <option selected>Open this select menu</option>
+						  <option value="1">One</option>
+						  <option value="2">Two</option>
+						  <option value="3">Three</option>
+						</select>
+					</div>
 				</div>
 			</div>
 
-			<div class='col-sm'>please select an destination:
-				<div class="dropdown">
-				  <button class="btn btn-secondary dropdown-toggle btn-info" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				    Dropdown button
-				  </button>
-				  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-				    <a class="dropdown-item" href="#">Action</a>
-				    <a class="dropdown-item" href="#">Another action</a>
-				    <a class="dropdown-item" href="#">Something else here</a>
-				  </div>
+			<div class='col-sm-6'>
+				<div class='row'><p class="text-center text-uppercase">please select an destination:</p></div>
+				<div class='row'>
+					<div class='col-sm-6'>
+						Line Name:
+						<select class="custom-select">
+						  <option selected>Open this select menu</option>
+						  <option value="1">One</option>
+						  <option value="2">Two</option>
+						  <option value="3">Three</option>
+						</select>
+					</div>
+					<div class='col-sm-6'>
+						Station Name:
+						<select class="custom-select">
+						  <option selected>Open this select menu</option>
+						  <option value="1">One</option>
+						  <option value="2">Two</option>
+						  <option value="3">Three</option>
+						</select>
+					</div>
 				</div>
 			</div>
-			<div class='col-sm'>than,let's go!
-				<div>
-					<button class="btn btn-secondary btn-info" type="button">GO</button>
+		</div>
+		<div class="row">
+			<div class='col-sm-12'>
+				<div class='row buttonCus'>
+					<div class="col-sm"></div>
+					<button class="col-sm btn btn-secondary btn-info" type="button">GO</button>
+					<div class="col-sm"></div>
 				</div>
 			</div>
+		</div>
+
+		<div class='row'>
+			<div class="col-sm"></div>
+			<div id="result"></div>
+			<div class="col-sm"></div>
 		</div>
 	</div>
 

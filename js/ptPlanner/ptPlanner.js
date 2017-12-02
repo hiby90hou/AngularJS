@@ -12,49 +12,23 @@ var trainMap = {
 
 }
 
-// interface setting
-function Dropdown1() {
-    document.getElementById("myDropdown1").classList.toggle("show");
-}
-
-function Dropdown2() {
-    document.getElementById("myDropdown2").classList.toggle("show");
-}
-
-// Close the dropdown menu if the user clicks outside of it
-window.onclick = function(event) {
-  if (!event.target.matches('.dropbtn')) {
-
-    var dropdowns = document.getElementsByClassName("dropdown-content");
-    var i;
-    for (i = 0; i < dropdowns.length; i++) {
-      var openDropdown = dropdowns[i];
-      if (openDropdown.classList.contains('show')) {
-        openDropdown.classList.remove('show');
-      }
-    }
-  }
-}
-
 
 var bigContainer = document.getElementById('myDropdown');
 
-
 var callback = function(result) {printResult(startPoint, endPoint, result);}
 
-routeFinding(startPoint, endPoint, trainMap,[],[],callback);
-// printResult(startPoint, endPoint, result);
+ routeFinding(startPoint, endPoint, trainMap,[],[],callback);
+
 
 /*
-*function name: routeFinding
-*input:startPoint(string), 
-       endPoint(string), 
-       trainMap(object),
-       aviodInter(array),
-       stationList(array)
-       callback(function)
-*return:result(array) 
-*/
+ *function name: routeFinding
+ *input:startPoint(string), 
+ *      endPoint(string), 
+ *      trainMap(object),
+ *      aviodInter(array),
+ *      stationList(array)
+ *      callback(function)
+ */
 
 function routeFinding(startPoint, endPoint, trainMap,aviodInter,stationList,callback) {
 
@@ -262,15 +236,17 @@ function isInSameLineCheck(startPoint, endPoint, trainMap) {
 }
 
 function printResult(startPoint, endPoint, result) {
-  document.write("origin: " + startPoint + "</br>");
-  document.write("destination: " + endPoint + "</br>");
+  var resultString = '';
+  resultString+=("origin: " + startPoint + "</br>");
+  resultString+=("destination: " + endPoint + "</br>");
   result.forEach(function(value, index) {
     if (index < result.length - 1) {
-      document.write(result[index] + " ---> ");
+      resultString+=(result[index] + " ---> ");
     } else {
-      document.write(result[index] + "</br>");
+      resultString+=(result[index] + "</br>");
     }
   })
 
-  document.write(result.length + " stops total")
+  resultString+=(result.length + " stops total </br>");
+  document.getElementById('result').innerHTML = resultString;
 }
