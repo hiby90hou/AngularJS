@@ -1,5 +1,5 @@
-var endPoint = 'Flinders Street';
-var startPoint = 'a';
+var startPoint = 'Flinders Street';
+var endPoint = 'a';
 
 console.log('startPoint' + startPoint);
 console.log('endPoint' + endPoint);
@@ -12,6 +12,7 @@ var trainMap = {
 
 }
 var callback = function(result) {printResult(startPoint, endPoint, result);}
+
 routeFinding(startPoint, endPoint, trainMap,[],[],callback);
 // printResult(startPoint, endPoint, result);
 
@@ -38,7 +39,7 @@ function routeFinding(startPoint, endPoint, trainMap,aviodInter,stationList,call
   if (SameLineCheck.inSameLine) {
 
     var result = calcOneLine(startPoint, endPoint, SameLineCheck.startLineName, trainMap);
-    console.log(result);
+    // console.log(result);
 
     // return result;
     callback(result);
@@ -57,17 +58,19 @@ function routeFinding(startPoint, endPoint, trainMap,aviodInter,stationList,call
         var endPart = isInSameLineCheck(intersectionArr[index], endPoint, trainMap);
         if (startPart.inSameLine && endPart.inSameLine) {
           connectedLine.num = index;
-          console.log("connectedLine.num = "+index)
+          console.log("connectedLine.num = "+value)
+          connectedLine.startLineName = startPart.startLineName;
+          connectedLine.endLineName = endPart.startLineName;
         }
       }
     );
 
     // when start point and end point can be connected by 1 intersection
     if (connectedLine.num !== -1) {
-      var result1 = calcOneLine(startPoint, intersectionArr[connectedLine.num], SameLineCheck.startLineName[0], trainMap);
-      var result2 = calcOneLine(intersectionArr[connectedLine.num], endPoint, SameLineCheck.endLineName[0], trainMap);
-      console.log('result1:' + result1)
-      console.log('result2:' + result2)
+      var result1 = calcOneLine(startPoint, intersectionArr[connectedLine.num], connectedLine.startLineName, trainMap);
+      var result2 = calcOneLine(intersectionArr[connectedLine.num], endPoint, connectedLine.endLineName, trainMap);
+      // console.log('result1:' + result1)
+      // console.log('result2:' + result2)
       result1.pop();
       if(stationList[0]){
         stationList.pop();
@@ -103,8 +106,7 @@ function routeFinding(startPoint, endPoint, trainMap,aviodInter,stationList,call
       var closeIntersectionFromStart = []
       intersectionArr.forEach(function(value,index){
         var startPart = isInSameLineCheck(startPoint, intersectionArr[index], trainMap);
-        console.log('startPart =')
-        console.log(startPart);
+
         if(startPart.inSameLine){
 
           stationList = stationList.concat(calcOneLine(startPoint, value, startPart.startLineName, trainMap));
@@ -161,6 +163,7 @@ function calcOneLine(startPoint, endPoint, startLineName, trainMap) {
   currentLine = currentLine.slice(0, endNum + 1);
   currentLine = currentLine.slice(startNum);
 
+  console.log("currentLine="+currentLine)
   return currentLine;
 }
 
