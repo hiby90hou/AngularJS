@@ -8,16 +8,58 @@ var trainMap = {
   AlameinLine: ['Flinders Street', 'Richmond', 'East Richmond', 'Burnley', 'Hawthorn', 'Glenferrie'],
   GlenWaverlyLine: ['Flagstaff', 'Melbourne Central', 'Parliament', 'Richmond', 'Kooyong', 'Tooronga'],
   SandringhamLine: ['Southern Cross', 'Richmond', 'South Yarra', 'Prahran', 'Windsor'],
-  testLine:['a','b','c','Prahran','d','e']
+  testLine:['a','b','c','Prahran','d','e'],
+  testLine2:['f','g','h','Prahran','i','j'],
 
 }
 
 
-var bigContainer = document.getElementById('myDropdown');
+//init interface
+var originLineDropdown = document.getElementById("originLineDropdown");
+var originStationDropdown = document.getElementById("originStationDropdown");
 
-var callback = function(result) {printResult(startPoint, endPoint, result);}
+initDropdown(originLineDropdown,originStationDropdown);
 
- routeFinding(startPoint, endPoint, trainMap,[],[],callback);
+var disLineDropdown = document.getElementById("disLineDropdown");
+var disStationDropdown = document.getElementById("disStationDropdown");
+
+initDropdown(disLineDropdown,disStationDropdown);
+
+//if change origin line name, change origin station list
+function changeOriginStationList(originLineDropdown,originStationDropdown){
+  var newLineName = document.getElementById(originLineDropdown).value;
+  // console.log(newLineName);
+  var originStationDropdown = document.getElementById(originStationDropdown);
+  //clean old station list
+  originStationDropdown.innerHTML = "";
+
+  var newList=trainMap[newLineName].slice();
+  newList.forEach(
+    function(value,index){
+      var newStation = document.createElement("option");
+      newStation.value = value;
+      newStation.innerHTML = value;
+      originStationDropdown.appendChild(newStation);
+      console.log(newStation)
+  })
+}
+
+//go button onclick function
+function checkroute(){
+  var currentStartStation = document.getElementById("originStationDropdown").value;
+  var currentEndStation = document.getElementById("disStationDropdown").value;
+
+  var callback = function(result) {printResult(currentStartStation, currentEndStation, result);}
+
+ routeFinding(currentStartStation, currentEndStation, trainMap,[],[],callback);
+}
+
+
+
+// test main function
+// var callback = function(result) {printResult(startPoint, endPoint, result);}
+
+//  routeFinding(startPoint, endPoint, trainMap,[],[],callback);
 
 
 /*
@@ -153,7 +195,7 @@ function calcOneLine(startPoint, endPoint, startLineName, trainMap) {
 
   var endNum = trainMap[startLineName].indexOf(endPoint);
 
-  var currentLine = trainMap[startLineName];
+  var currentLine = trainMap[startLineName].slice();
 
   //if endNum<startNum reverse currentLine Array
   if (endNum < startNum) {
@@ -249,4 +291,28 @@ function printResult(startPoint, endPoint, result) {
 
   resultString+=(result.length + " stops total </br>");
   document.getElementById('result').innerHTML = resultString;
+}
+
+function initDropdown(originLineDropdown,originStationDropdown){
+  var isFirstLine = 0;
+  for (var lineName in trainMap){
+    if(isFirstLine == 0){
+
+      //create origin station dropdown list
+      trainMap[lineName].forEach(
+        function(value,index){
+          var newStation = document.createElement("option");
+        newStation.value = value;
+        newStation.innerHTML = value;
+        originStationDropdown.appendChild(newStation);
+      })
+    }
+
+    var newLine = document.createElement("option");
+    newLine.value = lineName;
+    newLine.innerHTML = lineName;
+    originLineDropdown.appendChild(newLine);
+    isFirstLine++;
+  
+  }
 }

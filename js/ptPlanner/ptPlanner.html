@@ -43,21 +43,21 @@
 				<div class='row'><p class="text-center text-uppercase">please select an origin:</p></div>
 				<div class='row'>
 					<div class='col-sm-6'>
-						Line Name:
-						<select class="custom-select">
-						  <option selected>Open this select menu</option>
-						  <option value="1">One</option>
+						<div>Line Name:</div>
+						<select class="custom-select" id="originLineDropdown" onchange="changeOriginStationList('originLineDropdown','originStationDropdown')">
+						  <!-- <option selected>Open this select menu</option> -->
+<!-- 						  <option value="1">One</option>
 						  <option value="2">Two</option>
-						  <option value="3">Three</option>
+						  <option value="3">Three</option> -->
 						</select>
 					</div>
 					<div class='col-sm-6'>
-						Station Name:
-						<select class="custom-select">
-						  <option selected>Open this select menu</option>
+						<div>Station Name:</div>
+						<select class="custom-select" id="originStationDropdown">
+<!-- 						  <option selected>Open this select menu</option>
 						  <option value="1">One</option>
 						  <option value="2">Two</option>
-						  <option value="3">Three</option>
+						  <option value="3">Three</option> -->
 						</select>
 					</div>
 				</div>
@@ -67,21 +67,21 @@
 				<div class='row'><p class="text-center text-uppercase">please select an destination:</p></div>
 				<div class='row'>
 					<div class='col-sm-6'>
-						Line Name:
-						<select class="custom-select">
-						  <option selected>Open this select menu</option>
+						<div>Line Name:</div>
+						<select class="custom-select" id="disLineDropdown" onchange="changeOriginStationList('disLineDropdown','disStationDropdown')">
+<!-- 						  <option selected>Open this select menu</option>
 						  <option value="1">One</option>
 						  <option value="2">Two</option>
-						  <option value="3">Three</option>
+						  <option value="3">Three</option> -->
 						</select>
 					</div>
 					<div class='col-sm-6'>
-						Station Name:
-						<select class="custom-select">
-						  <option selected>Open this select menu</option>
+						<div>Station Name:</div>
+						<select class="custom-select" id="disStationDropdown">
+<!-- 						  <option selected>Open this select menu</option>
 						  <option value="1">One</option>
 						  <option value="2">Two</option>
-						  <option value="3">Three</option>
+						  <option value="3">Three</option> -->
 						</select>
 					</div>
 				</div>
@@ -91,7 +91,7 @@
 			<div class='col-sm-12'>
 				<div class='row buttonCus'>
 					<div class="col-sm"></div>
-					<button class="col-sm btn btn-secondary btn-info" type="button">GO</button>
+					<button class="col-sm btn btn-secondary btn-info" type="button" id="checkroute" onclick="checkroute()">GO</button>
 					<div class="col-sm"></div>
 				</div>
 			</div>
