@@ -6,8 +6,13 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
 	<link href="https://fonts.googleapis.com/css?family=Aldrich" rel="stylesheet">
 	<style type="text/css">
+		body{
+			background-color: #ccc;
+		}
 		.bigContainer{
 			max-width: 1000px;
+			min-height: 100vh;
+			background-color: white;
 		}
 		.banner{
 			background-color: #CCC;
@@ -17,6 +22,7 @@
 			line-height: 100px;
 			font-family: 'Aldrich', sans-serif;
 			margin-bottom: 10px;
+			overflow: hidden;
 		}
 		.dropdownCus{
 			margin-top: 10px;
@@ -28,14 +34,31 @@
 		.buttonCus{
 			margin: 30px 0;
 		}
+		#canvasContainer{
+		  width: 100vw;
+		  height: 100vh;
+		  display: flex;
+		  justify-content: center;
+		  align-items: flex-start;
+		  position: relative;
+		}
+		.titleText{
+			position: absolute;
+			top: 0;
+			left: 50%;
+			color:white;
+			transform: translate(-50%);
+			font-size: 80px;
+		}
 	</style>
 
 </head>
 <body>
 	<div class="container bigContainer">
 		<div class="row banner">
-			<div class='col-sm'>
-				<span>ptPlanner</span>
+			<div class='col-sm' id="canvasContainer">
+				<div class="titleText">ptPlanner</div>
+				<canvas id="myCanvas" width="600" height="300"></canvas>
 			</div>
 		</div>
 		<div class="row">
