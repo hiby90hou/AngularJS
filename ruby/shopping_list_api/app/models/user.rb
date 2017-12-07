@@ -12,4 +12,8 @@ class User < ApplicationRecord
    generate_authentication_token
    save
  end
+
+  def current_user
+    @current_user ||= User.find(session[:email]) if session[:email]
+  end
 end
