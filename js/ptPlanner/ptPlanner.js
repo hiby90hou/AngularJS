@@ -1,8 +1,8 @@
-var endPoint = 'Flagstaff';
-var startPoint = 'a';
+// var endPoint = 'Flagstaff';
+// var startPoint = 'a';
 
-console.log('startPoint' + startPoint);
-console.log('endPoint' + endPoint);
+// console.log('startPoint' + startPoint);
+// console.log('endPoint' + endPoint);
 
 var trainMap = {
   AlameinLine: ['Flinders Street', 'Richmond', 'East Richmond', 'Burnley', 'Hawthorn', 'Glenferrie'],
@@ -160,8 +160,7 @@ function routeFinding(startPoint, endPoint, trainMap,aviodInter,stationList,call
           routeFinding(intersectionArr[index], endPoint, trainMap,aviodInter,stationList,callback);
           
         }
-      }
-        )
+      })
     }
   }
 }
