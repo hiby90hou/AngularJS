@@ -1,0 +1,28 @@
+<div class="bigContainer">
+	<aside>
+		<div>Rotten Tomatoes Ratings: <%= @result['Ratings'][1]["Value"] %></div>
+		<div>Metascore: <%= @result['Metascore'] %></div>
+		<div>imdbRating: <%= @result['imdbRating'] %></div>
+		<div>Type: <%= @result['Type'] %></div>
+		<div>DVD: <%= @result['DVD'] %></div>
+		<div>Production: <%= @result['Production'] %></div>
+		<div>Website: <%= @result['Website'] %></div>
+	</aside>
+	<main>
+		<dir>
+			<img id="poster" src=<%= @result['Poster'] %>>	
+		</dir>
+		<div id="title">Title: <%= @result['Title'] %></div>
+		<div>Year: <%= @result['Year'] %></div>
+		<div>Rated: <%= @result['Rated'] %></div>
+		<div>Released: <%= @result['Released'] %></div>
+		<div>Runtime: <%= @result['Runtime'] %></div>
+		<div>Genre: <%= @result['Genre'] %></div>
+		<div>Director: <%= @result['Director'] %></div>
+		<div>Writer: <%= @result['Writer'] %></div>
+		<div>Actors: <%= @result['Actors'] %></div>
+		<div>Language: <%= @result['Language'] %></div>
+		<div>Plot: <%= @result['Plot'] %></div>
+		<div>Country: <%= @result['Country'] %></div>
+	</main>
+</div>
