@@ -1,0 +1,14 @@
+class Dish
+  self.find(id)
+  	# works the dish to return
+  	# connect to db
+  	# clean up the user input
+  	# execute
+  	# return even a fancy dish object
+  	
+	  conn = PG.connect(dbname: 'goodfoodhunting')
+		sql = "SELECT * FROM dishes;"
+		@dishes = conn.exec(sql)
+		conn.close
+  end
+end
