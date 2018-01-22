@@ -22,6 +22,12 @@ CREATE TABLE dish_type (
 	name VARCHAR(1024) NOT NULL
 );
 
+CREATE TABLE users(
+	id SERIAL PRIMARY KEY,
+	email VARCHAR(300) NOT NULL,
+	password_digest VARCHAR(400)
+);
+
 INSERT INTO dishes (
 	name,image_url) VALUES (
 	'pudding','https://dbjdsnch130xu.cloudfront.net/uploads/recipe/cover/205881/large_053f03d9b0b35829.jpg');
