@@ -3,3 +3,8 @@
 <h2><%= @dish.name %></h2>
 <img src=<%= @dish.image_url %>>
 <button onclick="window.location.href='/dishes/<%= @dish.id %>/edit'">edit</button>
+<form action="/dishes/<%= @dish.id %>" method = "post">
+	<input type="hidden" name="_method" value="delete">
+	<input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+	<button>delete</button>
+</form>

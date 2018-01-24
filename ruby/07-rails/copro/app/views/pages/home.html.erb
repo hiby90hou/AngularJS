@@ -1,0 +1,12 @@
+<div class="container">
+	<a href="/login">new user</a>
+	<% @projects.each { |project|%>
+	<div class="project">
+		<a href="/projects/<%= project.id %>">
+			<img src=<%= project.preview.url %> alt="">
+			<p><%= project.title %></p>
+		</a>
+	</div>
+	<% } %>
+
+</div>
