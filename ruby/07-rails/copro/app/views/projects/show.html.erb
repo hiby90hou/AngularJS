@@ -1,8 +1,43 @@
 <h2>show</h2>
-<div class="container">
-	<div class="project">
+	<!-- <div class="project"> -->
 		<p>title:<%= @project.title %></p>
-		<img src=<%= @project.preview.url %> alt="">
-	</div>
+		<div class="wrapper">
+			<img src=<%= @project.preview.url %> alt="">
+			<span>&#x1F496</span>
+		</div>
+		<form action="/likes" method="post">
+			<input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+			<input type="hidden" name="project_id" value=<%= @project.id%>>
+			<%= @project.likes.count %>
+			<button>like</button>
+		</form>
+	<!-- </div> -->
 
-</div>
+	<form action="/comments" method="post">
+		<h3>Comments:</h3>
+		<input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+		<input type="hidden" name="user_id" value=<%=session[:user_id] %>>
+		<input type="hidden" name="project_id" value=<%= @project.id %>>
+		<p>title:</p><input type="text" name="title">
+		<p>body:</p><input type="text" name="body">
+		<button>enter</button>
+	</form>
+
+	<ul>
+		<% @comments.each{|comment| %>
+		<li>
+			<!-- <p>user email: <%#= get_user_email(comment.user_id) %></p> -->
+			<p>user email: <%= comment.user.email %></p>
+			<p>title: <%= comment.title %></p>
+			<p>body: <%= comment.body %></p>
+		</li>
+		<% } %>
+	</ul>
+
+	<script>
+		like = document.querySelector('.wrapper').querySelector('span');
+		like.addEventListener('click',function(){
+			console.log("like");
+			like.style.color = 'red';
+		})
+	</script>

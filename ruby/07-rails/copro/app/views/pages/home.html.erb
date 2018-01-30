@@ -1,12 +1,54 @@
 <div class="container">
-	<a href="/login">new user</a>
-	<% @projects.each { |project|%>
-	<div class="project">
+	<% @projects.each do |project|%>
+	<!-- <div class="project"> -->
+<!-- 			<img src=<%#= project.preview.url %> alt="">
+			<h2><%#= project.title %></h2> -->
+    <div class="ui-card">
+      <header class="content">
+        <div class="right">14h</div>
+        <img class="avatar" src="https://placeholdit.imgix.net/~text?txtsize=75&txt=800%C3%97800&w=800&h=800" alt=""> DT
+      </header>
+
+      <div class="image">
+        <img src=<%= project.preview.url %> alt="">
+        <span class="star">&#9733;</span>
+      </div>
+
 		<a href="/projects/<%= project.id %>">
-			<img src=<%= project.preview.url %> alt="">
-			<p><%= project.title %></p>
+      <div class="content">
+        <h2><%= project.title %></h2>
+        <h4>at GA</h4>
+      </div>
+
+      <footer class="content">
+        <span class="right"><span class="star-count">12</span> stars</span>
+        <span>bookmark</span>
+      </footer>
+		<!-- </div> -->
+
 		</a>
 	</div>
-	<% } %>
+	<% end %>
 
-</div>
+	<script type="text/javascript">
+		console.log('ready');
+		var stars = document.querySelectorAll('.star');
+		stars.forEach(function(star){
+		  star.addEventListener('click',function(event){
+		    console.log('clicking star');
+
+		    //event.target
+		    //start from target
+		    //search for ui-card
+		    //then search down for star-count
+		    //set textContent to existing start-count + 1
+
+		    console.log(event.target)
+		    var starCount = event.target.closest('.ui-card').querySelector('.star-count')
+		    starCount.textContent = parseInt(starCount.textContent)+1;
+		    // starCount.textContent = 'bam';
+		  })
+		})
+	</script>
+
+

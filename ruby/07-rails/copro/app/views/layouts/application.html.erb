@@ -10,6 +10,13 @@
 
   <body>
   	<%= session[:user_id] %>
+    <% if session[:user_id] %>
+    <a href="/logout">logout</a>
+    <% else %>
+    <a href="/login">login</a>
+    <a href="/users/new">Sign up</a>
+    <% end %>
+    <a href="/">Home</a>
     <%= yield %>
   </body>
 </html>

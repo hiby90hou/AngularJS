@@ -4,6 +4,9 @@ class ProjectsController < ApplicationController
 
 	def show
 		@project = Project.find_by(id:params[:id])
+		@comments = @project.comments
+		#@comments = Comment.joins("INNER JOIN users ON users.id = comments.user_id").where("project_id=#{params[:id]}")
+
 	end
 
 	def create

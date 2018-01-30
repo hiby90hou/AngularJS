@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<input type="text" name="new"><button>add</button>
+	<div class="container">
+		
+	</div>
+	<script type="text/javascript">
+		console.log("working")
+
+		var createPara = function(text){
+			var newBtn = document.createElement("p");
+			newBtn.textContent = text;
+			newBtn.onclick = function(event){
+				event.target.remove();
+			};
+			return newBtn;
+		}
+		
+		var language = ['ruby','javascript','golang'];
+		var container = document.querySelector(".container")
+		language.forEach(function(lan){
+			// var lanEle = document.createElement("p");
+			// lanEle.textContent = lan
+			// lanEle.onclick = function(event){
+			// 	event.target.remove();
+			// };
+			var lanEle = createPara(lan)
+			container.appendChild(lanEle);
+		})
+
+		var addBtn = document.querySelector("button")
+		addBtn.addEventListener("click",function(){
+			// var newBtn = document.createElement("p");
+			// newBtn.textContent = document.querySelector("input").value;
+			// newBtn.onclick = function(event){
+			// 	event.target.remove();
+			// };
+			var newBtn = createPara(document.querySelector("input").value);
+			container.appendChild(newBtn);
+			document.querySelector("input").value = '';
+		})
+
+
+	</script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script
+   src="http://code.jquery.com/jquery-3.3.1.slim.min.js"
+   integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E="
+   crossorigin="anonymous"></script>
+</head>
+<style type="text/css">
+	.container{
+		padding: 20px;
+		background-color: green;
+	}
+
+	p{
+		background: blue;
+	}
+</style>
+<body>
+	<input type="text" name=""><button>add</button>
+	<div class="container">
+		<p class="kid">alex</p>
+		<p class="kid">robbie</p>
+		<p class="kid">fouad</p>
+	</div>
+
+	<script type="text/javascript">
+		// var container = document.querySelector('.container');
+		// container.addEventListener('click', function(e){
+		// 	console.log('clicked')
+		// 	if(e.target.tagName ==='P'){
+		// 		e.target.remove();
+		// 	}
+		// })
+
+		$container = $('.container');
+		// $container.click(function(e){
+		// 	console.log('clicked');
+		// 	if(e.target.tagName ==='P'){
+		// 		e.target.remove();
+		// 	}
+		// })
+		$container.on('click','p',function(e){
+			e.target.remove();
+		})
+
+
+		// var addBtn = document.querySelector('button');
+		// addBtn.addEventListener('click',function(){
+		// 	var inputValue = document.querySelector('input').value;
+		// 	var newPara = document.createElement('p');
+		// 	newPara.textContent = inputValue;
+		// 	container.appendChild(newPara);
+		// })
+		var $addBtn = $('button');
+		$addBtn.click(function(){
+			// var inputValue = $('input')[0].value
+			var inputValue = $('input').val();
+			$newPara = $('<p>').text(inputValue);
+			// $('.container').append("<p>"+inputValue+"</p>")
+			$('.container').append($newPara)
+		})
+	</script>
+</body>
+</html>

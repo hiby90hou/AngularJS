@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>gfh ui</title>
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+  <main class="content">
+    
+    <div class="ui-card">
+      <header class="content">
+        <div class="right">14h</div>
+        <img class="avatar" src="https://placeholdit.imgix.net/~text?txtsize=75&txt=800%C3%97800&w=800&h=800" alt=""> DT
+      </header>
+
+      <div class="image">
+        <img src="https://placeholdit.imgix.net/~text?txtsize=75&txt=800%C3%97800&w=800&h=800" alt="">
+        <span class="star">&#9733;</span>
+      </div>
+
+      <div class="content">
+        <h2>cake</h2>
+        <h4>at GA</h4>
+      </div>
+
+      <footer class="content">
+        <span class="right"><span class="star-count">12</span> stars</span>
+        <span>bookmark</span>
+      </footer>
+
+    </div>
+
+    <div class="ui-card">
+      <header class="content">
+        <div class="right">14h</div>
+        <img class="avatar" src="https://placeholdit.imgix.net/~text?txtsize=75&txt=800%C3%97800&w=800&h=800" alt="">
+      </header>
+
+      <div class="image">
+        <img src="https://placeholdit.imgix.net/~text?txtsize=75&txt=800%C3%97800&w=800&h=800" alt="">
+        <span class="star">&#9733;</span>
+      </div>
+
+      <div class="content">
+        <h2>pudding</h2>
+        <h4>at GA</h4>
+      </div>
+
+      <footer class="content">
+        <span class="right"><span class="star-count">300</span> stars</span>
+        <span>bookmark</span>
+      </footer>
+    </div>  
+
+    <div class="ui-card">
+      <header class="content">
+        <div class="right">14h</div>
+        <img class="avatar" src="https://placeholdit.imgix.net/~text?txtsize=75&txt=800%C3%97800&w=800&h=800" alt="">
+      </header>
+
+      <div class="image">
+        <img src="https://placeholdit.imgix.net/~text?txtsize=75&txt=800%C3%97800&w=800&h=800" alt="">
+        <span class="star">&#9733;</span>
+      </div>
+
+      <div class="content">
+        <h2>crowbar</h2>
+        <h4>at Home</h4>
+      </div>
+
+      <footer class="content">
+        <span class="right"><span class="star-count">79</span> stars</span>
+        <span>bookmark</span>
+      </footer>
+    </div>        
+
+  </main>
+  <script type="text/javascript">
+    console.log('ready');
+    var stars = document.querySelectorAll('.star');
+    stars.forEach(function(star){
+      star.addEventListener('click',function(event){
+        console.log('clicking star');
+
+        //event.target
+        //start from target
+        //search for ui-card
+        //then search down for star-count
+        //set textContent to existing start-count + 1
+
+        console.log(event.target)
+        var starCount = event.target.closest('.ui-card').querySelector('.star-count')
+        starCount.textContent = parseInt(firstCard.textContent)+1;
+        // starCount.textContent = 'bam';
+      })
+    })
+
+  </script>
+</body>
+</html>
