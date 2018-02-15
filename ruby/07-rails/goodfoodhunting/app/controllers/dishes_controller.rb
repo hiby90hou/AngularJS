@@ -18,6 +18,11 @@ class DishesController < ApplicationController
 		@dish_list = Dish.all
 	end
 
+	def api_index
+		@dish_list = Dish.all
+		render json: @dish_list
+	end
+
 	def update
 		dish = Dish.find(params[:id])
 		dish.name = params[:name]

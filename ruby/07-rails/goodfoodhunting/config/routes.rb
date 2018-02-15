@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :comments
   delete '/dishes', to: 'dishes#delete' ## can rewrite distroy route in resources
   resources :dishes # this line make a new route
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
@@ -13,5 +14,7 @@ Rails.application.routes.draw do
   root to: 'pages#home'
 
   get '/about', to: 'pages#about'
+  get '/api/dishes', to: 'dishes#api_index'
+  post '/api/comments', to: 'comments#api_create'
 
 end
