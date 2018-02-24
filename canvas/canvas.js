@@ -4,7 +4,7 @@ Setup
 
 let c = document.querySelector( 'canvas' ),
 	ctx = c.getContext( '2d' ),
-	unit = 30,
+	unit = 50,
 	cols = window.innerWidth/50,
 	rows = window.innerHeight/50,
 	w = unit * cols,
