@@ -5,7 +5,7 @@ body {
 
 canvas {
 	width: 100vw;
-	height:100vh;
+	height: 100vh;
 	bottom: 0;
 	box-shadow: 0 0 0 10px #111;
 	left: 0;
@@ -13,4 +13,9 @@ canvas {
 	position: absolute;
 	right: 0;
 	top: 0;
+}
+
+.title{
+	color: white;
+	font-size: 10em
 }
