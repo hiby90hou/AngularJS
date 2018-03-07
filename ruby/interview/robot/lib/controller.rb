@@ -39,11 +39,11 @@ class Controller
 
 	def data_processing(data)
 		if !data.is_a?(Array) 
-			return "ERROR: invalid command"
+			raise RuntimeError.new("ERROR: invalid command")
 		else
 			first_place_index = data.find_index { |e| e.match(/^PLACE [0-9]+,[0-9]+,(NORTH|SOUTH|EAST|WEST)$/)}
 			if first_place_index == nil
-				return "ERROR: user did not place robot on table"
+				raise "ERROR: user did not place robot on table"
 			else
 				return data.slice(first_place_index,data.length)
 			end
@@ -52,7 +52,8 @@ class Controller
 
 	def place_robot(x, y, direction)
 		if !valid_place?(x, y)
-			return "Error: Invalid place"
+			raise "ERROR: Invalid place"
+			# return "Error: Invalid place"
 		end
 
 		@robot.x = x
@@ -127,7 +128,7 @@ class Controller
 		elsif angle%360 == 270
 			return "WEST"
 		else
-			return "error direction"
+			raise ("error direction")
 		end
 	end
 

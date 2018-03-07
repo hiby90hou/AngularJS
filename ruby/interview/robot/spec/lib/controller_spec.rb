@@ -34,11 +34,11 @@ RSpec.describe Controller do
 		end
 
 		it "if data is not an array, report error 'ERROR: invalid command'" do
-			expect(@controller.data_processing("Error: file do not exist.")).to eq ("ERROR: invalid command")
+			expect {@controller.data_processing("Error: file do not exist.")}.to raise_error('ERROR: invalid command')
 		end
 
 		it "if data do not contain place command, report error 'ERROR: user did not place robot on table'" do
-			expect(@controller.data_processing([ "MOVE", "MOVE", "LEFT", "MOVE", "REPORT"])).to eq ("ERROR: user did not place robot on table")
+			expect {@controller.data_processing([ "MOVE", "MOVE", "LEFT", "MOVE", "REPORT"])}.to raise_error('ERROR: user did not place robot on table')
 		end
 	end
 
@@ -101,7 +101,7 @@ RSpec.describe Controller do
 		end
 
 		it "place robot in (6, 6, 'NORTH') is invalid because it out of boundary" do
-			expect(@controller.place_robot(6, 6, 'NORTH')).to eq ("Error: Invalid place")
+			expect{@controller.place_robot(6, 6, 'NORTH')}.to raise_error("ERROR: Invalid place")
 		end
 
 		it "robot in (0, 0, 'NORTH') can move to next block" do
@@ -154,5 +154,4 @@ RSpec.describe Controller do
 			expect(@controller.turn("RIGHT")).to eq ({:x=>0, :y=>0, :dir=>"EAST"})
 		end
 	end
-	
 end

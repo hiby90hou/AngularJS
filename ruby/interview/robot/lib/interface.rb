@@ -2,7 +2,7 @@ class Interface
 
 	def read_file(filePath)
 		if !File.exist?(filePath)
-			return "Error: file do not exist."
+			raise ("ERROR: file do not exist.")
 		end
 
 		data = []

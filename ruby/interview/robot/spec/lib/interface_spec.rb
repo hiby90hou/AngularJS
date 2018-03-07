@@ -74,24 +74,24 @@ RSpec.describe Interface do
 
 	context 'Check read file' do
 
-		it "'./input_folder/input.txt'(normal input) can be read" do
-			expect(@interface.read_file("./input_folder/input.txt")).to eq (["PLACE 0,0,NORTH", "MOVE", "REPORT"])
+		it "'./test_data/input.txt'(normal input) can be read" do
+			expect(@interface.read_file("./test_data/input.txt")).to eq (["PLACE 0,0,NORTH", "MOVE", "REPORT"])
 		end
 
-		it "'./input_folder/input.txt'(input with out place command) can be read" do
-			expect(@interface.read_file("./input_folder/input4.txt")).to eq (["MOVE", "LEFT", "MOVE", "MOVE", "LEFT", "MOVE", "REPORT"])
+		it "'./test_data/input.txt'(input with out place command) can be read" do
+			expect(@interface.read_file("./test_data/input4.txt")).to eq (["MOVE", "LEFT", "MOVE", "MOVE", "LEFT", "MOVE", "REPORT"])
 		end
 
 		it "input file with wrong name can not be read" do
-			expect(@interface.read_file("wrong_name")).to eq ("Error: file do not exist.")
+			expect {@interface.read_file("wrong_name")}.to raise_error("ERROR: file do not exist.")
 		end
 
-		it "'./input_folder/input5.txt'(invalid command in the input file) invalid command can be ignore" do
-			expect(@interface.read_file("./input_folder/input5.txt")).to eq (["PLACE 1,2,EAST", "MOVE", "MOVE", "LEFT", "MOVE", "REPORT"])
+		it "'./test_data/input5.txt'(invalid command in the input file) invalid command can be ignore" do
+			expect(@interface.read_file("./test_data/input5.txt")).to eq (["PLACE 1,2,EAST", "MOVE", "MOVE", "LEFT", "MOVE", "REPORT"])
 		end
 
-		it "'./input_folder/input6.txt'(empty file) can be read to an empty array" do
-			expect(@interface.read_file("./input_folder/input6.txt")).to eq ([])
+		it "'./test_data/input6.txt'(empty file) can be read to an empty array" do
+			expect(@interface.read_file("./test_data/input6.txt")).to eq ([])
 		end
 	end
 end
