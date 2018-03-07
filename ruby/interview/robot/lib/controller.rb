@@ -1,12 +1,6 @@
-require "pry"
-class Robot
-	attr_accessor :x, :y, :angle
-	def initialize(x=0,y=0,angle=0)
-		@x = x
-		@y = y
-		@angle = angle
-	end
-end
+# require "pry"
+require_relative "./robot.rb"
+require_relative "./interface.rb"
 
 class Controller
 	def initialize(row=5 ,column=5)
@@ -18,16 +12,13 @@ class Controller
 
 	def main_controller
 		data = @interface.get_data
-		if data == nil
-			return "error: no valid command"
+
+		valid_data = data_processing(data)
+		
+		if !(valid_data.is_a?(Array)) 
+			return "Error: Can not read data."
 		end
 
-		first_place_index = data.find_index { |e| e.match( /^PLACE [0-9]+,[0-9]+,(NORTH|SOUTH|EAST|WEST)$/ ) }
-		if first_place_index == nil
-			return "error: user did not place robot on table"
-		end
-
-		valid_data = data.slice(first_place_index,data.length)
 		valid_data.each do |command|
 			case command
 			when /^PLACE [0-9]+,[0-9]+,(NORTH|SOUTH|EAST|WEST)$/
@@ -37,23 +28,38 @@ class Controller
 			when /^MOVE$/
 				move()
 			when /^LEFT$/
-				turn("left")
+				turn("LEFT")
 			when /^RIGHT$/
-				turn("right")
+				turn("RIGHT")
 			when /^REPORT$/
-				show_place()
+				show_place_to_interface()
+			end
+		end
+	end
+
+	def data_processing(data)
+		if !data.is_a?(Array) 
+			return "ERROR: invalid command"
+		else
+			first_place_index = data.find_index { |e| e.match(/^PLACE [0-9]+,[0-9]+,(NORTH|SOUTH|EAST|WEST)$/)}
+			if first_place_index == nil
+				return "ERROR: user did not place robot on table"
+			else
+				return data.slice(first_place_index,data.length)
 			end
 		end
 	end
 
 	def place_robot(x, y, direction)
 		if !valid_place?(x, y)
-			return
+			return "Error: Invalid place"
 		end
 
 		@robot.x = x
 		@robot.y = y
 		@robot.angle = direction_translate(direction)
+
+		return show_place()
 	end
 
 	def move
@@ -70,6 +76,8 @@ class Controller
 		elsif show_direction(angle) == "WEST" && can_go_west?(x, y)
 			@robot.x = x-1
 		end
+
+		return show_place()
 	end
 
 	def turn(direction)
@@ -77,11 +85,13 @@ class Controller
 		y = @robot.y
 		angle = @robot.angle
 
-		if direction == "left"
+		if direction == "LEFT"
 			@robot.angle = angle - 90
 		else
 			@robot.angle = angle + 90
 		end
+
+		return show_place()
 	end
 
 	def direction_translate(direction)
@@ -100,7 +110,11 @@ class Controller
 	def show_place
 		direction = show_direction(@robot.angle)
 		report_object = {"x":@robot.x, "y":@robot.y, "dir":direction}
-		@interface.report(report_object)
+		return report_object
+	end
+
+	def show_place_to_interface
+		@interface.report(show_place())
 	end
 
 	def show_direction(angle)
@@ -139,60 +153,6 @@ class Controller
 	end
 end
 
-class Interface
 
-	def read_file(filePath)
-		data = []
-		File.open(filePath, "r") do |f|
-		  f.each_line do |line|
-		    data.push(line.upcase.chomp)
-		  end
-		end
-		return data
-	end
+# binding.pry
 
-	def get_data
-		puts "Please input file path"
-		filePath = gets.chomp
-		data = read_file(filePath)
-
-		data.map! do |command|
-			if is_place?(command) || is_move?(command) || is_left?(command) || 
-				is_right?(command) || is_report?(command)
-				command
-			else
-				nil
-			end
-		end
-
-		data.compact!
-
-		return data
-	end
-
-	def is_place?(command)
-		!!(command =~ /^PLACE [0-9]+,[0-9]+,(NORTH|SOUTH|EAST|WEST)$/)
-	end
-
-	def is_move?(command)
-		!!(command =~ /^MOVE$/)
-	end
-
-	def is_left?(command)
-		!!(command =~ /^LEFT$/)
-	end
-
-	def is_right?(command)
-		!!(command =~ /^RIGHT$/)
-	end
-
-	def is_report?(command)
-		!!(command =~ /^REPORT$/)
-	end
-	
-	def report(data_object)
-		puts "#{data_object[:x]},#{data_object[:y]},#{data_object[:dir]}"
-	end
-end
-
-binding.pry
