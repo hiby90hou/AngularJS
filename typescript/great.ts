@@ -138,4 +138,3 @@ class Menu {
 
   console.log(code);
   console.log(price);
-  
