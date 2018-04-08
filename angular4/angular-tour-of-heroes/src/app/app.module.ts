@@ -15,6 +15,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './in-memory-data.service';
+import { TestService } from './test.service';
 
 @NgModule({
   imports: [
@@ -33,7 +34,7 @@ import { InMemoryDataService } from './in-memory-data.service';
     HeroDetailComponent,
     MessagesComponent
   ],
-  providers: [ HeroService, MessageService ],
+  providers: [ HeroService, MessageService, TestService ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }

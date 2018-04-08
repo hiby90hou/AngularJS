@@ -4,6 +4,7 @@ import { Location } from '@angular/common';
 
 import { Hero } from '../hero';
 import { HeroService } from '../hero.service';
+import { TestService } from '../test.service';
 
 @Component({
   selector: 'app-hero-detail',
@@ -13,11 +14,21 @@ import { HeroService } from '../hero.service';
 export class HeroDetailComponent implements OnInit {
   @Input() hero: Hero;
 
+  public test;
+
   constructor(
     private route: ActivatedRoute,
     private heroService: HeroService,
-    private location: Location
-  ) {}
+    private location: Location,
+    private _testService: TestService
+  ) {
+    console.log(this._testService.getData());
+    this._testService.setData("test");
+    this.test = this._testService.getData();
+  }
+
+  
+  // public test = 1;
 
   ngOnInit(): void {
     this.getHero();
