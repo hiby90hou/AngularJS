@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using System.Web;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -17,9 +18,10 @@ namespace WebApplication1.Controllers
         }
         //
         // GET: /HelloWorld/Welcome/
-        public string Welcome()
+        public string Welcome(string name, int numTimes = 1)
         {
-            return "This is the Welcome action method...";
+            // return "This is the Welcome action method...";
+            return HttpUtility.HtmlEncode("Hello " + name + ", NumTimes is: " + numTimes);
         }
     }
 }
