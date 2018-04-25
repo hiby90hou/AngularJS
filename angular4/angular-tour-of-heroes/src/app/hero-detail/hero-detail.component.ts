@@ -20,24 +20,34 @@ export class HeroDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private heroService: HeroService,
     private location: Location,
-    private _testService: TestService
+    // private _testService: TestService
   ) {
-    console.log(this._testService.getData());
-    this._testService.setData("test");
-    this.test = this._testService.getData();
+    // console.log(this._testService.getData());
+    // this._testService.setData("test");
+    // this.test = this._testService.getData();
   }
 
   
   // public test = 1;
 
   ngOnInit(): void {
-    this.getHero();
+    // this.getHero();
+    this.route.data
+    .subscribe((data) => {
+      this.hero = data.hero;
+      console.log(data)
+    });
   }
 
-  getHero(): void {
-    const id = +this.route.snapshot.paramMap.get('id');
-    this.heroService.getHero(id)
-      .subscribe(hero => this.hero = hero);
+  // getHero(): void {
+  //   const id = +this.route.snapshot.paramMap.get('id');
+  //   this.heroService.getHero(id)
+  //     .subscribe(hero => this.hero = hero);
+  // }
+
+  save(): void {
+    this.heroService.updateHero(this.hero)
+      .subscribe(() => this.goBack());
   }
 
   goBack(): void {
