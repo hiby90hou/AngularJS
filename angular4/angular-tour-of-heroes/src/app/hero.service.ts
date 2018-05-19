@@ -8,12 +8,23 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { Hero } from './hero';
 import { MessageService } from './message.service';
 
+import { Subject } from 'rxjs/Subject';
+
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
 @Injectable()
 export class HeroService {
+  // Observable string source
+  private dataStringSource = new Subject<string>();
+
+  // Observable string stream
+  dataString = this.dataStringSource.asObservable();
+
+  insertData(data: string) {
+    this.dataStringSource.next(data)
+  }
 
   private heroesUrl = 'api/heroes';  // URL to web api
 

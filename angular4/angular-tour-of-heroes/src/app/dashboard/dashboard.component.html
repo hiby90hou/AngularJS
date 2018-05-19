@@ -4,6 +4,9 @@
       routerLink="/detail/{{hero.id}}">
     <div class="module hero">
       <h4>{{hero.name}}</h4>
+      <p>{{data}}</p>
     </div>
+    
   </a>
+  <button (click)="setSharedValue()">Change value in shared service</button>
 </div>
