@@ -13,6 +13,7 @@ function resize_canvas(){
 
 // Create the canvas
 var canvas = document.createElement("canvas");
+canvas.setAttribute("disable-scroll","true");
 var ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 canvas.height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
@@ -69,6 +70,7 @@ const getMousePos = (canvasDom, mouseEvent) => {
 }
 
 addEventListener('touchmove', function(e) {
+	e.preventDefault();
    mousePos = getTouchPos(canvas, e);
    // console.log(mousePos);
    // console.log(hero);
@@ -209,11 +211,11 @@ var render = function () {
 	}
 
 	if (heroReady) {
-		ctx.drawImage(heroImage, hero.x, hero.y);
+		ctx.drawImage(heroImage, hero.x, hero.y,canvas.width*0.05, canvas.width*0.05);
 	}
 
 	if (monsterReady) {
-		ctx.drawImage(monsterImage, monster.x, monster.y);
+		ctx.drawImage(monsterImage, monster.x, monster.y,canvas.width*0.05, canvas.width*0.05);
 	}
 
 	// Score
