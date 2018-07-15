@@ -1,14 +1,9 @@
-function resize_canvas(){
-  canvas = document.getElementsByTagName("canvas");
-  if (canvas.width  < window.innerWidth)
-  {
-    canvas.width  = window.innerWidth;
-  }
-
-  if (canvas.height < window.innerHeight)
-  {
-    canvas.height = window.innerHeight;
-  }
+function resizeCanvas(){
+  canvas = document.getElementsByTagName("canvas")[0];
+  const width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+  const height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+  canvas.width = width;
+  canvas.height = height;
 }
 
 // Create the canvas
@@ -43,6 +38,14 @@ monsterImage.onload = function () {
 };
 monsterImage.src = "images/monster.png";
 
+// Star image
+var starArr = [];
+var starReady = false;
+var starImage = new Image();
+starImage.onload = function () {
+	starReady = true;
+};
+starImage.src = "images/star.png";
 // Game objects
 var hero = {
 	speed: 256 // movement in pixels per second
@@ -63,12 +66,13 @@ const getTouchPos = (canvasDom, touchEvent) => {
 
 const getMousePos = (canvasDom, mouseEvent) => {
   var rect = canvasDom.getBoundingClientRect();
+
   return {
     x: mouseEvent.clientX - rect.left,
     y: mouseEvent.clientY - rect.top
   };
 }
-
+addEventListener('resize', resizeCanvas, false);
 addEventListener('touchmove', function(e) {
 	e.preventDefault();
    mousePos = getTouchPos(canvas, e);
@@ -112,8 +116,10 @@ addEventListener("mousedown", function (e) {
 }, false);
 addEventListener('mousemove', function(e) {
    mousePos = getMousePos(canvas, e);
-   // console.log(mousePos);
-   // console.log(hero);
+    starArr.push({x:(mousePos.x),y:(mousePos.y)});
+   	if (starArr.length > 20){
+   		starArr.shift();
+   	}
    //Player touch up
    if(drawing){
 		if(mousePos.y < hero.y){
@@ -129,6 +135,7 @@ addEventListener('mousemove', function(e) {
 		if(mousePos.x < hero.x){
 			keysDown[-3] = true;
 		}else{
+
 			delete keysDown[-3];
 		}
 		if(mousePos.x > hero.x){
@@ -210,6 +217,16 @@ var render = function () {
 		ctx.drawImage(bgImage, 0, 0,canvas.width, canvas.height);
 	}
 
+	if (starReady) {
+		starArr.forEach((star, index) => {
+			const i = index < (starArr.length/2-1)?index/5:(starArr.length-index)/5;
+			ctx.drawImage(starImage, 
+				star.x-(canvas.width*0.01+i)/2, 
+				star.y-(canvas.width*0.01+i)/2,
+				canvas.width*0.01*i, canvas.width*0.01*i);
+		});
+	}
+
 	if (heroReady) {
 		ctx.drawImage(heroImage, hero.x, hero.y,canvas.width*0.05, canvas.width*0.05);
 	}
@@ -217,6 +234,8 @@ var render = function () {
 	if (monsterReady) {
 		ctx.drawImage(monsterImage, monster.x, monster.y,canvas.width*0.05, canvas.width*0.05);
 	}
+
+
 
 	// Score
 	ctx.fillStyle = "rgb(250, 0, 0)";
